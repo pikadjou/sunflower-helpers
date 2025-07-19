@@ -1,0 +1,28 @@
+{
+  "name": "sunflower-helpers",
+  "version": "1.0.0",
+  "description": "Extension Chrome pour améliorer votre expérience de navigation",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "clean": "rimraf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "ts-loader": "^9.5.1",
+    "copy-webpack-plugin": "^11.0.0",
+    "rimraf": "^5.0.5"
+  },
+  "keywords": [
+    "chrome-extension",
+    "typescript",
+    "productivity",
+    "web-enhancement"
+  ],
+  "author": "Sunflower Helpers Team",
+  "license": "MIT"
+}

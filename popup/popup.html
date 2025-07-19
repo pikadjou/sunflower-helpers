@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 600px;
+      height: 700px;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+  </style>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="dashboard">
+    <div class="header">
+      <h1>🌻 Sunflower Land Dashboard</h1>
+      <div class="farm-info">
+        <span class="farm-id">Farm ID: <span id="farmId">-</span></span>
+        <span class="last-update">Dernière mise à jour: <span id="lastUpdate">-</span></span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="overview">Vue d'ensemble</button>
+      <button class="tab-btn" data-tab="inventory">Inventaire</button>
+      <button class="tab-btn" data-tab="resources">Ressources</button>
+      <button class="tab-btn" data-tab="animals">Animaux</button>
+      <button class="tab-btn" data-tab="buildings">Bâtiments</button>
+      <button class="tab-btn" data-tab="mining">Minage</button>
+      <button class="tab-btn" data-tab="raw-data">Données Brutes</button>
+      <button class="tab-btn" data-tab="debug">Debug</button>
+    </div>
+
+    <div class="tab-content">
+      <!-- Vue d'ensemble -->
+      <div id="overview" class="tab-pane active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-info">
+              <div class="stat-value" id="coins">0</div>
+              <div class="stat-label">Coins</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">💎</div>
+            <div class="stat-info">
+              <div class="stat-value" id="balance">0</div>
+              <div class="stat-label">SFL Balance</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-info">
+              <div class="stat-value" id="experience">0</div>
+              <div class="stat-label">Expérience</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-info">
+              <div class="stat-value" id="level">1</div>
+              <div class="stat-label">Niveau</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="recent-activity">
+          <h3>🌱 Activité Récente</h3>
+          <div id="recentActivities" class="activities-list">
+            <div class="activity-item">En attente de données...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventaire -->
+      <div id="inventory" class="tab-pane">
+        <div class="inventory-categories">
+          <div class="category-tabs">
+            <button class="category-btn active" data-category="seeds">🌱 Graines</button>
+            <button class="category-btn" data-category="crops">🥕 Récoltes</button>
+            <button class="category-btn" data-category="tools">🔨 Outils</button>
+            <button class="category-btn" data-category="food">🍞 Nourriture</button>
+            <button class="category-btn" data-category="flowers">🌸 Fleurs</button>
+            <button class="category-btn" data-category="other">📦 Autres</button>
+          </div>
+          <div id="inventoryItems" class="inventory-grid">
+            <!-- Items will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Ressources -->
+      <div id="resources" class="tab-pane">
+        <div class="resources-section">
+          <h3>⛏️ Matières Premières</h3>
+          <div id="rawMaterials" class="resource-grid">
+            <!-- Raw materials will be populated here -->
+          </div>
+        </div>
+        
+        <div class="resources-section">
+          <h3>🏗️ Matériaux de Construction</h3>
+          <div id="buildingMaterials" class="resource-grid">
+            <!-- Building materials will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Animaux -->
+      <div id="animals" class="tab-pane">
+        <div class="animals-section">
+          <h3>🐔 Poulets</h3>
+          <div id="chickens" class="animals-grid">
+            <!-- Chickens will be populated here -->
+          </div>
+        </div>
+        
+        <div class="animals-section">
+          <h3>🐄 Vaches</h3>
+          <div id="cows" class="animals-grid">
+            <!-- Cows will be populated here -->
+          </div>
+        </div>
+        
+        <div class="animals-section">
+          <h3>🐑 Moutons</h3>
+          <div id="sheep" class="animals-grid">
+            <!-- Sheep will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Bâtiments -->
+      <div id="buildings" class="tab-pane">
+        <div id="buildingsList" class="buildings-grid">
+          <!-- Buildings will be populated here -->
+        </div>
+      </div>
+
+      <!-- Minage -->
+      <div id="mining" class="tab-pane">
+        <div class="mining-categories">
+          <div class="category-tabs">
+            <button class="category-btn active" data-mining-category="stones">🗿 Pierre</button>
+            <button class="category-btn" data-mining-category="trees">🌳 Bois</button>
+            <button class="category-btn" data-mining-category="iron">⚙️ Fer</button>
+            <button class="category-btn" data-mining-category="gold">🟡 Or</button>
+            <button class="category-btn" data-mining-category="crimstones">🔴 Carmin</button>
+            <button class="category-btn" data-mining-category="oil">🛢️ Pétrole</button>
+            <button class="category-btn" data-mining-category="collectibles">💎 Collectibles</button>
+          </div>
+          <div id="miningItems" class="mining-locations-grid">
+            <!-- Mining items will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Données Brutes -->
+      <div id="raw-data" class="tab-pane">
+        <div class="raw-data-section">
+          <h3>📊 Sessions Capturées (<span id="sessionCount">0</span>)</h3>
+          <div id="rawDataContainer" class="raw-data-container">
+            <!-- Raw data will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Debug -->
+      <div id="debug" class="tab-pane">
+        <div class="debug-section">
+          <h3>🔧 Debug Information</h3>
+          <div id="debugContainer" class="debug-container">
+            <!-- Debug info will be populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="refreshData" class="action-btn primary">🔄 Actualiser</button>
+      <button id="exportData" class="action-btn secondary">📄 Exporter</button>
+      <button id="clearData" class="action-btn danger">🗑️ Effacer</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

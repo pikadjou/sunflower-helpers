@@ -1,0 +1,122 @@
+/* Sunflower Helpers Content Styles */
+
+.sunflower-highlight {
+  background-color: #fff3cd !important;
+  border: 1px solid #ffeaa7 !important;
+  border-radius: 3px !important;
+  padding: 2px 4px !important;
+  transition: all 0.3s ease !important;
+}
+
+.sunflower-highlight:hover {
+  background-color: #ffeaa7 !important;
+  transform: scale(1.02) !important;
+}
+
+.sunflower-focus-mode {
+  position: relative !important;
+}
+
+.sunflower-focus-mode::before {
+  content: '' !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  z-index: 9998 !important;
+  pointer-events: none !important;
+}
+
+.sunflower-focus-mode .sunflower-focused-element {
+  position: relative !important;
+  z-index: 9999 !important;
+  box-shadow: 0 0 20px rgba(255, 234, 167, 0.8) !important;
+  border-radius: 8px !important;
+}
+
+.sunflower-ui {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  background: white !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  z-index: 10000 !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  font-size: 14px !important;
+  min-width: 200px !important;
+}
+
+.sunflower-ui h4 {
+  margin: 0 0 8px 0 !important;
+  color: #333 !important;
+  font-size: 16px !important;
+}
+
+.sunflower-ui button {
+  display: block !important;
+  width: 100% !important;
+  margin-bottom: 8px !important;
+  padding: 8px 12px !important;
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+  background: #f8f9fa !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s !important;
+}
+
+.sunflower-ui button:hover {
+  background: #e9ecef !important;
+}
+
+.sunflower-ui button:last-child {
+  margin-bottom: 0 !important;
+}
+
+.sunflower-ui .close-btn {
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  width: 20px !important;
+  height: 20px !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  color: #666 !important;
+  margin: 0 !important;
+}
+
+.sunflower-readability {
+  line-height: 1.6 !important;
+  font-size: 16px !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  padding: 20px !important;
+}
+
+.sunflower-readability h1,
+.sunflower-readability h2,
+.sunflower-readability h3 {
+  color: #2c3e50 !important;
+  margin-top: 24px !important;
+  margin-bottom: 12px !important;
+}
+
+.sunflower-readability p {
+  margin-bottom: 16px !important;
+  color: #34495e !important;
+}
+
+.sunflower-readability a {
+  color: #3498db !important;
+  text-decoration: underline !important;
+}
+
+.sunflower-readability a:hover {
+  color: #2980b9 !important;
+}
