@@ -147,3 +147,33 @@ export interface SessionDataSummary {
   uniqueEndpoints: string[];
   requestsByMethod: Record<string, number>;
 }
+
+// Types pour les données de jeu Sunflower Land
+export interface SunflowerGameData {
+  id?: number;
+  coins?: number;
+  balance?: string;
+  experience?: number;
+  level?: number;
+  bumpkin?: {
+    experience: number;
+    level: number;
+    [key: string]: any;
+  };
+  inventory?: Record<string, string>;
+  chickens?: Record<string, any>;
+  cows?: Record<string, any>;
+  sheep?: Record<string, any>;
+  buildings?: Record<string, any>;
+  stones?: Record<string, any>;
+  trees?: Record<string, any>;
+  iron?: Record<string, any>;
+  gold?: Record<string, any>;
+  crimstones?: Record<string, any>;
+  oil?: Record<string, any>;
+  beehives?: Record<string, any>;
+  fruitPatches?: Record<string, any>;
+  flowers?: Record<string, any>;
+  crops?: Record<string, any>;
+  [key: string]: any;
+}
