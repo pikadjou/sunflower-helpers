@@ -2,7 +2,7 @@ import { ExtensionAction, SunflowerSessionData, SunflowerGameData, AutosaveUpdat
 import { OverviewRenderer, InventoryRenderer, MiningRenderer } from './renderers';
 import { ResourcesRenderer, BuildingsRenderer } from './other-renderers';
 import { RawDataRenderer, DebugRenderer } from './debug-renderers';
-import { TimersRenderer } from './advanced-renderers';
+import { TimersRenderer } from './crop-tabs-renderer';
 
 class DashboardManager {
   private sessionData: SunflowerSessionData[] = [];
@@ -138,7 +138,7 @@ class DashboardManager {
       defaultTab?.classList.add('active');
     }
 
-    this.renderActiveTab();
+    this.renderActiveTab().catch(console.error);
   }
 
   private setupTabSwitching(): void {
@@ -414,7 +414,7 @@ class DashboardManager {
     });
     document.getElementById(tabName)?.classList.add('active');
 
-    this.renderActiveTab();
+    this.renderActiveTab().catch(console.error);
   }
 
   private switchCategory(categoryName: string): void {
@@ -451,7 +451,7 @@ class DashboardManager {
     
     this.updateFarmInfo();
     this.updateSessionCount();
-    this.renderActiveTab();
+    this.renderActiveTab().catch(console.error);
     
     console.log('✅ renderDashboard terminé');
   }
@@ -504,13 +504,13 @@ class DashboardManager {
     }
   }
 
-  private renderActiveTab(): void {
+  private async renderActiveTab(): Promise<void> {
     switch (this.activeTab) {
       case 'overview':
         this.renderOverview();
         break;
       case 'timers':
-        this.renderTimers();
+        await this.renderTimers();
         break;
       case 'inventory':
         this.renderInventory();
@@ -612,13 +612,13 @@ class DashboardManager {
   }
 
 
-  private renderTimers(): void {
+  private async renderTimers(): Promise<void> {
     console.log('🚨 TIMERS TAB CLICKED! renderTimers() appelé');
     console.log('⏰ Rendering timers with data:', {
       hasData: !!this.currentGameData,
       dataKeys: this.currentGameData ? Object.keys(this.currentGameData) : []
     });
-    TimersRenderer.render(this.currentGameData);
+    await TimersRenderer.render(this.currentGameData);
   }
 
   private async refreshData(): Promise<void> {

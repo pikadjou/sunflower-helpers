@@ -130,22 +130,45 @@ export class TimerManager {
       const cropName = crop.name || crop.type;
       const amount = crop.amount || crop.quantity || 1;
       
+      
       if (plantedAt && cropName) {
-        // plantedAt est déjà en millisecondes dans Sunflower Land
-        const plantedTime = plantedAt;
-        const growthTime = this.getCropGrowthTime(cropName);
-        const harvestTime = plantedTime + growthTime;
-        const remainingTime = Math.max(0, harvestTime - now);
+        let remainingTime: number;
+        let totalTime: number;
+        let isCurrentlyReady: boolean;
         
-        // Logique correcte : si remainingTime > 0, la culture pousse encore
-        const isCurrentlyReady = remainingTime === 0;
+        // Utiliser currentTime et expectedEndTime pour calculer précisément
+        if (crop.currentTime && crop.expectedEndTime) {
+          // Calculer la différence entre expectedEndTime et currentTime du jeu
+          const gameDuration = crop.expectedEndTime - crop.currentTime;
+          // Ajouter cette durée à la date actuelle réelle
+          const realEndTime = now + gameDuration;
+          remainingTime = Math.max(0, realEndTime - now);
+          totalTime = crop.totalTime || gameDuration;
+          isCurrentlyReady = remainingTime === 0;
+          
+          console.log(`🌾 ${cropName}: gameDuration=${gameDuration}ms, remainingTime=${remainingTime}ms`);
+        } else if (crop.remainingTime !== undefined && crop.totalTime !== undefined) {
+          // Fallback: utiliser les données pré-calculées
+          remainingTime = crop.remainingTime;
+          totalTime = crop.totalTime;
+          isCurrentlyReady = crop.isReady || remainingTime === 0;
+        } else {
+          // Fallback: calculer manuellement (données brutes uniquement)
+          console.warn(`⚠️ Pas de timing pour ${cropName}, calcul manuel`);
+          const plantedTime = plantedAt;
+          const growthTime = this.getCropGrowthTime(cropName);
+          const harvestTime = plantedTime + growthTime;
+          remainingTime = Math.max(0, harvestTime - now);
+          totalTime = growthTime;
+          isCurrentlyReady = remainingTime === 0;
+        }
         
         timers.push({
           id: `crop-${id}`,
           type: 'crop',
           name: `${cropName} x${amount}`,
-          remainingTime,  // Garder le temps réel restant
-          totalTime: growthTime,
+          remainingTime,
+          totalTime,
           isReady: isCurrentlyReady
         });
         
@@ -230,26 +253,9 @@ export class TimerManager {
   }
 
   private static getCropGrowthTime(cropType: string): number {
-    const growthTimes: Record<string, number> = {
-      'Sunflower': 1 * 60 * 1000,        // 1 minute
-      'Potato': 5 * 60 * 1000,           // 5 minutes
-      'Pumpkin': 30 * 60 * 1000,         // 30 minutes
-      'Carrot': 60 * 60 * 1000,          // 1 hour
-      'Cabbage': 2 * 60 * 60 * 1000,     // 2 hours
-      'Beetroot': 4 * 60 * 60 * 1000,    // 4 hours
-      'Cauliflower': 8 * 60 * 60 * 1000, // 8 hours
-      'Parsnip': 12 * 60 * 60 * 1000,    // 12 hours
-      'Eggplant': 16 * 60 * 60 * 1000,   // 16 hours
-      'Corn': 20 * 60 * 60 * 1000,       // 20 hours
-      'Radish': 24 * 60 * 60 * 1000,     // 24 hours
-      'Wheat': 24 * 60 * 60 * 1000,      // 24 hours
-      'Kale': 36 * 60 * 60 * 1000,       // 36 hours
-      // Crops Sunflower Land spécifiques
-      'Soybean': 5 * 60 * 1000,          // 5 minutes
-      'Artichoke': 8 * 60 * 60 * 1000    // 8 heures
-    };
-    
-    return growthTimes[cropType] || 60 * 60 * 1000; // Par défaut 1 heure
+    // Fonction de fallback pour les données sans timing pré-calculé
+    console.warn(`⚠️ Utilisation du fallback getCropGrowthTime pour "${cropType}"`);
+    return 60 * 60 * 1000; // Par défaut 1 heure
   }
 
   /* private static estimateCropValue(cropType: string, amount: number): number {
