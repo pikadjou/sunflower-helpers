@@ -17,22 +17,40 @@
 <body>
   <div class="dashboard">
     <div class="header">
-      <h1>🌻 Sunflower Land Dashboard</h1>
+      <div class="header-top">
+        <h1>🌻 Sunflower Land Dashboard</h1>
+        <button id="detachBtn" class="detach-btn" title="Ouvrir dans un onglet séparé">🔗</button>
+      </div>
       <div class="farm-info">
         <span class="farm-id">Farm ID: <span id="farmId">-</span></span>
         <span class="last-update">Dernière mise à jour: <span id="lastUpdate">-</span></span>
       </div>
     </div>
 
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="overview">Vue d'ensemble</button>
-      <button class="tab-btn" data-tab="inventory">Inventaire</button>
-      <button class="tab-btn" data-tab="resources">Ressources</button>
-      <button class="tab-btn" data-tab="animals">Animaux</button>
-      <button class="tab-btn" data-tab="buildings">Bâtiments</button>
-      <button class="tab-btn" data-tab="mining">Minage</button>
-      <button class="tab-btn" data-tab="raw-data">Données Brutes</button>
-      <button class="tab-btn" data-tab="debug">Debug</button>
+    <!-- Section Navigation -->
+    <div class="section-nav">
+      <button class="section-btn active" data-section="basic">📊 Données de Base</button>
+      <button class="section-btn" data-section="advanced">🚀 Données Avancées</button>
+    </div>
+
+    <!-- Basic Data Section -->
+    <div id="basic-section" class="data-section active">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="inventory">Inventaire</button>
+        <button class="tab-btn" data-tab="resources">Ressources</button>
+        <button class="tab-btn" data-tab="buildings">Bâtiments</button>
+        <button class="tab-btn" data-tab="mining">Minage</button>
+        <button class="tab-btn" data-tab="raw-data">Données Brutes</button>
+        <button class="tab-btn" data-tab="debug">Debug</button>
+      </div>
+    </div>
+
+    <!-- Advanced Data Section -->
+    <div id="advanced-section" class="data-section">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="overview">Vue d'ensemble</button>
+        <button class="tab-btn" data-tab="timers">⏰ Timers</button>
+      </div>
     </div>
 
     <div class="tab-content">
@@ -67,12 +85,69 @@
               <div class="stat-label">Niveau</div>
             </div>
           </div>
+          <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-info">
+              <div class="stat-value" id="dailyStreak">0</div>
+              <div class="stat-label">Série Quotidienne</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🍯</div>
+            <div class="stat-info">
+              <div class="stat-value" id="totalHoney">0</div>
+              <div class="stat-label">Miel Total</div>
+            </div>
+          </div>
         </div>
 
-        <div class="recent-activity">
-          <h3>🌱 Activité Récente</h3>
+        <!-- Actions Rapides -->
+        <div class="quick-actions">
+          <h3>⚡ Actions Rapides</h3>
+          <div class="action-buttons">
+            <button class="action-btn" id="harvestAll">🌾 Récolter Tout</button>
+            <button class="action-btn" id="collectHoney">🍯 Collecter Miel</button>
+          </div>
+        </div>
+
+        <!-- Activités Récentes -->
+        <div class="recent-activities">
+          <h3>📋 Activités Récentes</h3>
           <div id="recentActivities" class="activities-list">
-            <div class="activity-item">En attente de données...</div>
+            <!-- Recent activities will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Timers -->
+      <div id="timers" class="tab-pane">
+        <div class="timers-overview">
+          <h3>⏰ Activités en Cours</h3>
+          <div class="active-timers">
+            <div id="activeTimers" class="timers-grid">
+              <!-- Active timers will be populated here -->
+            </div>
+          </div>
+        </div>
+
+        <div class="scheduled-activities">
+          <h3>📅 Activités Programmées</h3>
+          <div id="scheduledActivities" class="schedule-grid">
+            <!-- Scheduled activities will be populated here -->
+          </div>
+        </div>
+
+        <div class="harvest-calendar">
+          <h3>🗓️ Calendrier de Récolte</h3>
+          <div id="harvestCalendar" class="calendar-view">
+            <!-- Harvest calendar will be populated here -->
+          </div>
+        </div>
+
+        <div class="optimization-suggestions">
+          <h3>💡 Suggestions d'Optimisation</h3>
+          <div id="optimizationSuggestions" class="suggestions-list">
+            <!-- Optimization suggestions will be populated here -->
           </div>
         </div>
       </div>
@@ -80,16 +155,29 @@
       <!-- Inventaire -->
       <div id="inventory" class="tab-pane">
         <div class="inventory-categories">
-          <div class="category-tabs">
-            <button class="category-btn active" data-category="seeds">🌱 Graines</button>
-            <button class="category-btn" data-category="crops">🥕 Récoltes</button>
-            <button class="category-btn" data-category="tools">🔨 Outils</button>
-            <button class="category-btn" data-category="food">🍞 Nourriture</button>
-            <button class="category-btn" data-category="flowers">🌸 Fleurs</button>
-            <button class="category-btn" data-category="other">📦 Autres</button>
+          <!-- Barre de recherche -->
+          <div class="inventory-search">
+            <div class="search-container">
+              <input type="text" id="inventorySearch" class="search-input" placeholder="🔍 Rechercher un item...">
+              <button id="clearSearch" class="clear-search-btn" title="Effacer la recherche">×</button>
+            </div>
+            <div class="search-stats">
+              <span id="searchResults">Tous les items</span>
+            </div>
           </div>
+          
+          <div class="category-tabs">
+            <button class="category-btn active" data-category="all">📋 Tous</button>
+            <button class="category-btn" data-category="seeds">🌱 Graines</button>
+            <button class="category-btn" data-category="crops">🥕 Récoltes</button>
+            <button class="category-btn" data-category="resources">⛏️ Ressources</button>
+            <button class="category-btn" data-category="tools">🔧 Outils</button>
+            <button class="category-btn" data-category="food">🍞 Nourriture</button>
+            <button class="category-btn" data-category="decorations">🎨 Décorations</button>
+          </div>
+          
           <div id="inventoryItems" class="inventory-grid">
-            <!-- Items will be populated here -->
+            <!-- Inventory items will be populated here -->
           </div>
         </div>
       </div>
@@ -97,40 +185,16 @@
       <!-- Ressources -->
       <div id="resources" class="tab-pane">
         <div class="resources-section">
-          <h3>⛏️ Matières Premières</h3>
-          <div id="rawMaterials" class="resource-grid">
-            <!-- Raw materials will be populated here -->
+          <h3>🏗️ Matériaux de Construction</h3>
+          <div id="buildingMaterials" class="resources-grid">
+            <!-- Building materials will be populated here -->
           </div>
         </div>
         
         <div class="resources-section">
-          <h3>🏗️ Matériaux de Construction</h3>
-          <div id="buildingMaterials" class="resource-grid">
-            <!-- Building materials will be populated here -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Animaux -->
-      <div id="animals" class="tab-pane">
-        <div class="animals-section">
-          <h3>🐔 Poulets</h3>
-          <div id="chickens" class="animals-grid">
-            <!-- Chickens will be populated here -->
-          </div>
-        </div>
-        
-        <div class="animals-section">
-          <h3>🐄 Vaches</h3>
-          <div id="cows" class="animals-grid">
-            <!-- Cows will be populated here -->
-          </div>
-        </div>
-        
-        <div class="animals-section">
-          <h3>🐑 Moutons</h3>
-          <div id="sheep" class="animals-grid">
-            <!-- Sheep will be populated here -->
+          <h3>⛏️ Matières Premières</h3>
+          <div id="rawMaterials" class="resources-grid">
+            <!-- Raw materials will be populated here -->
           </div>
         </div>
       </div>
@@ -146,46 +210,59 @@
       <div id="mining" class="tab-pane">
         <div class="mining-categories">
           <div class="category-tabs">
-            <button class="category-btn active" data-mining-category="stones">🗿 Pierre</button>
-            <button class="category-btn" data-mining-category="trees">🌳 Bois</button>
+            <button class="category-btn active" data-mining-category="stones">🪨 Pierres</button>
             <button class="category-btn" data-mining-category="iron">⚙️ Fer</button>
-            <button class="category-btn" data-mining-category="gold">🟡 Or</button>
-            <button class="category-btn" data-mining-category="crimstones">🔴 Carmin</button>
+            <button class="category-btn" data-mining-category="gold">🏆 Or</button>
+            <button class="category-btn" data-mining-category="crimstones">💎 Crimstones</button>
             <button class="category-btn" data-mining-category="oil">🛢️ Pétrole</button>
-            <button class="category-btn" data-mining-category="collectibles">💎 Collectibles</button>
           </div>
-          <div id="miningItems" class="mining-locations-grid">
-            <!-- Mining items will be populated here -->
+          
+          <div id="miningContent" class="mining-grid">
+            <!-- Mining content will be populated here -->
           </div>
         </div>
       </div>
 
       <!-- Données Brutes -->
       <div id="raw-data" class="tab-pane">
-        <div class="raw-data-section">
-          <h3>📊 Sessions Capturées (<span id="sessionCount">0</span>)</h3>
-          <div id="rawDataContainer" class="raw-data-container">
-            <!-- Raw data will be populated here -->
+        <div class="raw-data-container">
+          <div class="data-controls">
+            <button id="refreshData" class="action-btn">🔄 Actualiser</button>
+            <button id="exportData" class="action-btn">💾 Exporter JSON</button>
+            <button id="clearData" class="action-btn warning">🗑️ Effacer</button>
+            <span class="data-count">Sessions: <span id="sessionCount">0</span></span>
+          </div>
+          <div id="rawDataContent" class="raw-data-content">
+            <!-- Raw data content will be populated here -->
           </div>
         </div>
       </div>
 
       <!-- Debug -->
       <div id="debug" class="tab-pane">
-        <div class="debug-section">
-          <h3>🔧 Debug Information</h3>
-          <div id="debugContainer" class="debug-container">
-            <!-- Debug info will be populated here -->
+        <div class="debug-container">
+          <div class="debug-section">
+            <h3>🔍 Informations Debug</h3>
+            <div id="debugInfo" class="debug-info">
+              <!-- Debug information will be populated here -->
+            </div>
+          </div>
+          
+          <div class="debug-section">
+            <h3>📝 Journal des Sessions</h3>
+            <div id="sessionLog" class="session-log">
+              <!-- Session log will be populated here -->
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="actions">
-      <button id="refreshData" class="action-btn primary">🔄 Actualiser</button>
-      <button id="exportData" class="action-btn secondary">📄 Exporter</button>
-      <button id="clearData" class="action-btn danger">🗑️ Effacer</button>
-    </div>
+  <!-- Message d'info -->
+  <div id="infoTip" class="info-tip" style="display: none;">
+    <span class="tip-text">Aucune donnée interceptée. Visitez sunflower-land.com pour commencer.</span>
+    <button id="closeTip" class="close-tip">×</button>
   </div>
 
   <script src="popup.js"></script>

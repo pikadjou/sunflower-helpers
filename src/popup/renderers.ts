@@ -53,7 +53,7 @@ export class OverviewRenderer {
 }
 
 export class InventoryRenderer {
-  static render(gameData: SunflowerGameData | null, activeCategory: string): void {
+  static render(gameData: SunflowerGameData | null, activeCategory: string, searchTerm: string = ''): void {
     const container = document.getElementById('inventoryItems');
     if (!container || !gameData?.inventory) {
       UIUtils.showNoDataMessage('inventoryItems', 'Aucune donnée d\'inventaire disponible.');
@@ -62,15 +62,35 @@ export class InventoryRenderer {
 
     container.innerHTML = '';
     
-    const filteredItems = InventoryRenderer.filterByCategory(gameData.inventory, activeCategory);
+    let filteredItems = InventoryRenderer.filterByCategory(gameData.inventory, activeCategory);
+    
+    // Appliquer le filtre de recherche si un terme de recherche est fourni
+    if (searchTerm) {
+      filteredItems = InventoryRenderer.filterBySearch(filteredItems, searchTerm);
+    }
+
+    // Mettre à jour les statistiques de recherche
+    InventoryRenderer.updateSearchStats(filteredItems, searchTerm, activeCategory);
 
     Object.entries(filteredItems).forEach(([itemName, quantity]) => {
       const itemElement = InventoryRenderer.createInventoryItem(itemName, quantity);
       container.appendChild(itemElement);
     });
+
+    // Afficher un message si aucun item trouvé
+    if (Object.keys(filteredItems).length === 0) {
+      const noResultsMessage = searchTerm 
+        ? `Aucun item trouvé pour "${searchTerm}"`
+        : 'Aucun item dans cette catégorie';
+      UIUtils.showNoDataMessage('inventoryItems', noResultsMessage);
+    }
   }
 
   private static filterByCategory(inventory: Record<string, string>, category: string): Record<string, string> {
+    if (category === 'all') {
+      return { ...inventory };
+    }
+
     const categoryMappings: Record<string, string[]> = {
       seeds: ['Sunflower Seed', 'Potato Seed', 'Pumpkin Seed', 'Carrot Seed', 'Cabbage Seed', 'Soybean Seed', 'Beetroot Seed', 'Cauliflower Seed', 'Parsnip Seed', 'Eggplant Seed', 'Corn Seed', 'Radish Seed', 'Wheat Seed', 'Kale Seed'],
       crops: ['Sunflower', 'Potato', 'Pumpkin', 'Carrot', 'Cabbage', 'Soybean', 'Beetroot', 'Cauliflower', 'Parsnip', 'Eggplant', 'Corn', 'Radish', 'Wheat', 'Kale'],
@@ -98,6 +118,46 @@ export class InventoryRenderer {
     return filtered;
   }
 
+  private static filterBySearch(inventory: Record<string, string>, searchTerm: string): Record<string, string> {
+    const filtered: Record<string, string> = {};
+    const normalizedSearchTerm = searchTerm.toLowerCase().trim();
+
+    Object.entries(inventory).forEach(([itemName, quantity]) => {
+      if (itemName.toLowerCase().includes(normalizedSearchTerm)) {
+        filtered[itemName] = quantity;
+      }
+    });
+
+    return filtered;
+  }
+
+  private static updateSearchStats(filteredItems: Record<string, string>, searchTerm: string, category: string): void {
+    const searchStatsElement = document.getElementById('searchResults');
+    if (!searchStatsElement) return;
+
+    const itemCount = Object.keys(filteredItems).length;
+    const totalQuantity = Object.values(filteredItems).reduce((sum, qty) => sum + (parseInt(qty) || 0), 0);
+
+    let statsText = '';
+    if (searchTerm) {
+      statsText = `${itemCount} item(s) trouvé(s) pour "${searchTerm}"`;
+    } else {
+      const categoryNames: Record<string, string> = {
+        all: 'Tous les items',
+        seeds: 'Graines',
+        crops: 'Récoltes',
+        tools: 'Outils',
+        food: 'Nourriture',
+        flowers: 'Fleurs',
+        other: 'Autres items'
+      };
+      const categoryName = categoryNames[category] || 'Items';
+      statsText = `${categoryName} (${itemCount} items, ${totalQuantity} total)`;
+    }
+
+    searchStatsElement.textContent = statsText;
+  }
+
   private static createInventoryItem(name: string, quantity: string): HTMLElement {
     const div = document.createElement('div');
     div.className = 'inventory-item';
@@ -116,9 +176,9 @@ export class InventoryRenderer {
 
 export class MiningRenderer {
   static render(gameData: SunflowerGameData | null, activeMiningCategory: string): void {
-    const container = document.getElementById('miningItems');
+    const container = document.getElementById('miningContent');
     if (!container || !gameData) {
-      UIUtils.showNoDataMessage('miningItems', 'Aucune donnée disponible. Visitez Sunflower Land pour charger les données.');
+      UIUtils.showNoDataMessage('miningContent', 'Aucune donnée disponible. Visitez Sunflower Land pour charger les données.');
       return;
     }
 
@@ -132,7 +192,7 @@ export class MiningRenderer {
   }
 
   private static renderMiningByCategory(gameData: SunflowerGameData, category: string): void {
-    const container = document.getElementById('miningItems');
+    const container = document.getElementById('miningContent');
     if (!container) return;
 
     const locations = gameData[category];
@@ -158,7 +218,7 @@ export class MiningRenderer {
   }
 
   private static renderCollectibles(gameData: SunflowerGameData): void {
-    const container = document.getElementById('miningItems');
+    const container = document.getElementById('miningContent');
     if (!container) return;
 
     container.innerHTML = '';

@@ -2,13 +2,14 @@ import { SunflowerSessionData, SunflowerGameData } from '../types/extension';
 import { UIUtils } from './utils';
 
 export class RawDataRenderer {
-  static render(sessionData: SunflowerSessionData[]): void {
-    const container = document.getElementById('rawDataContainer');
+  static render(sessionData: SunflowerSessionData[] | null | undefined): void {
+    const container = document.getElementById('rawDataContent');
     if (!container) return;
 
     container.innerHTML = '';
     
-    if (sessionData.length === 0) {
+    // Handle undefined or null sessionData
+    if (!sessionData || !Array.isArray(sessionData) || sessionData.length === 0) {
       container.innerHTML = '<div class="raw-session-item">Aucune donnée interceptée. Visitez Sunflower Land pour capturer des données.</div>';
       return;
     }
@@ -39,17 +40,19 @@ export class RawDataRenderer {
 }
 
 export class DebugRenderer {
-  static render(sessionData: SunflowerSessionData[], gameData: SunflowerGameData | null): void {
-    const container = document.getElementById('debugContainer');
+  static render(sessionData: SunflowerSessionData[] | null | undefined, gameData: SunflowerGameData | null): void {
+    const container = document.getElementById('debugInfo');
     if (!container) return;
 
     container.innerHTML = '';
     
-    DebugRenderer.addDebugItem(container, 'Nombre de sessions', sessionData.length.toString());
+    // Handle undefined or null sessionData
+    const safeSessionData = sessionData || [];
+    DebugRenderer.addDebugItem(container, 'Nombre de sessions', safeSessionData.length.toString());
     DebugRenderer.addDebugItem(container, 'Données de jeu extraites', gameData ? 'Oui' : 'Non');
     
-    if (sessionData.length > 0) {
-      const latestSession = sessionData[sessionData.length - 1];
+    if (safeSessionData.length > 0) {
+      const latestSession = safeSessionData[safeSessionData.length - 1];
       if (latestSession) {
         DebugRenderer.addDebugItem(container, 'Dernière session URL', latestSession.url);
         DebugRenderer.addDebugItem(container, 'Dernière session méthode', latestSession.method);

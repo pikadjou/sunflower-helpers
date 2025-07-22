@@ -2,9 +2,10 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  devtool: false, // Désactive eval() pour éviter les problèmes CSP
   entry: {
     popup: './src/popup/popup.ts',
-    background: './src/background/background.ts',
+    background: './src/background/background-simple.ts',
     content: './src/content/content.ts',
     'network-interceptor': './src/content/network-interceptor.ts'
   },

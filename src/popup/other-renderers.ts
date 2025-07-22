@@ -72,47 +72,6 @@ export class ResourcesRenderer {
   }
 }
 
-export class AnimalsRenderer {
-  static render(gameData: SunflowerGameData | null): void {
-    AnimalsRenderer.renderAnimalSection('chickens', '🐔', gameData);
-    AnimalsRenderer.renderAnimalSection('cows', '🐄', gameData);
-    AnimalsRenderer.renderAnimalSection('sheep', '🐑', gameData);
-  }
-
-  private static renderAnimalSection(animalType: string, icon: string, gameData: SunflowerGameData | null): void {
-    const container = document.getElementById(animalType);
-    if (!container) return;
-
-    const animals = gameData?.[animalType];
-    if (!animals) {
-      container.innerHTML = `<div class="animal-card">Aucun ${animalType.slice(0, -1)} trouvé</div>`;
-      return;
-    }
-
-    container.innerHTML = '';
-    
-    Object.entries(animals).forEach(([animalId, animalData]: [string, any]) => {
-      const animalElement = AnimalsRenderer.createAnimalCard(animalId, animalData, icon);
-      container.appendChild(animalElement);
-    });
-  }
-
-  private static createAnimalCard(id: string, data: any, icon: string): HTMLElement {
-    const div = document.createElement('div');
-    div.className = 'animal-card';
-    
-    const state = data.state || 'idle';
-    const stateClass = state.toLowerCase();
-    
-    div.innerHTML = `
-      <div class="item-icon">${icon}</div>
-      <div class="item-name">${id}</div>
-      <div class="animal-state ${stateClass}">${state}</div>
-    `;
-    
-    return div;
-  }
-}
 
 export class BuildingsRenderer {
   static render(gameData: SunflowerGameData | null): void {

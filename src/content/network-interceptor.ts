@@ -5,23 +5,50 @@ import {
 class NetworkInterceptor {
 
   constructor() {
-    console.log('🚀 NetworkInterceptor constructor appelé');
+    console.log('🚀🚀🚀 NetworkInterceptor constructor appelé 🚀🚀🚀');
+    console.log('📍 URL actuelle:', window.location.href);
+    console.log('📍 Domain:', window.location.hostname);
     this.interceptFetch();
     this.interceptXMLHttpRequest();
-    console.log('🚀 NetworkInterceptor initialisé avec succès');
+    console.log('✅✅✅ NetworkInterceptor initialisé avec succès ✅✅✅');
+    
+    // Test de base pour vérifier que le script fonctionne
+    console.log('🔍 Test de fetch original:', typeof window.fetch);
+    console.log('🔍 Test de chrome.runtime:', typeof chrome?.runtime);
   }
 
   private interceptFetch(): void {
+    console.log('🔧 Début de interceptFetch()');
     const originalFetch = window.fetch;
     
     window.fetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
       const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
       
-      // Ne capturer QUE POST /session
-      const isSessionPost = url.includes('api.sunflower-land.com/session') && (init?.method === 'POST');
+      // Log TOUTES les requêtes pour debug
+      if (url.includes('sunflower-land.com')) {
+        console.log('🌻 Requête Sunflower détectée:', {
+          url,
+          method: init?.method || 'GET',
+          isAPI: url.includes('api.sunflower-land.com')
+        });
+      }
       
-      if (isSessionPost) {
-        console.log('🟢 POST /session DÉTECTÉ:', url);
+      // Capturer POST /session ET POST /autosave
+      const isSessionPost = url.includes('api.sunflower-land.com/session') && (init?.method === 'POST');
+      const isAutosavePost = url.includes('api.sunflower-land.com/autosave') && (init?.method === 'POST');
+      const shouldCapture = isSessionPost || isAutosavePost;
+      
+      if (shouldCapture) {
+        if (isSessionPost) {
+          console.log('🟢 POST /session DÉTECTÉ:', url);
+        } else if (isAutosavePost) {
+          console.log('🔄 POST /autosave DÉTECTÉ:', url);
+          // Extraire l'analyticsId pour les logs
+          const match = url.match(/\/autosave\/(\d+)/);
+          if (match) {
+            console.log('🎯 analyticsId extrait:', match[1]);
+          }
+        }
       }
 
       const startTime = Date.now();
@@ -57,8 +84,20 @@ class NetworkInterceptor {
         }
 
         // Créer l'objet de données de session
-        // Ne sauvegarder QUE POST /session
-        if (isSessionPost) {
+        // Sauvegarder POST /session ET POST /autosave
+        if (shouldCapture) {
+          // Déterminer le type et extraire l'analyticsId si nécessaire
+          const type = isSessionPost ? 'session' : 'autosave';
+          let analyticsId: string | undefined = undefined;
+          
+          if (isAutosavePost) {
+            // Extraire l'analyticsId depuis l'URL (/autosave/147896)
+            const match = url.match(/\/autosave\/(\d+)/);
+            if (match) {
+              analyticsId = match[1];
+            }
+          }
+          
           const sessionData: SunflowerSessionData = {
             timestamp: startTime,
             method: init?.method || 'GET',
@@ -66,7 +105,9 @@ class NetworkInterceptor {
             requestBody: requestBody,
             responseBody: responseBody,
             responseHeaders: this.extractHeaders(response.headers),
-            statusCode: response.status
+            statusCode: response.status,
+            type: type,
+            ...(analyticsId && { analyticsId })
           };
 
           // Envoyer les données au background script
@@ -75,8 +116,20 @@ class NetworkInterceptor {
 
         return response;
       } catch (error) {
-        // En cas d'erreur, sauvegarder seulement si c'est POST /session
-        if (isSessionPost) {
+        // En cas d'erreur, sauvegarder si c'est POST /session OU POST /autosave
+        if (shouldCapture) {
+          // Déterminer le type et extraire l'analyticsId si nécessaire
+          const type = url.includes('/session') ? 'session' : 'autosave';
+          let analyticsId: string | undefined = undefined;
+          
+          if (url.includes('/autosave')) {
+            // Extraire l'analyticsId depuis l'URL (/autosave/147896)
+            const match = url.match(/\/autosave\/(\d+)/);
+            if (match) {
+              analyticsId = match[1];
+            }
+          }
+          
           const sessionData: SunflowerSessionData = {
             timestamp: startTime,
             method: init?.method || 'GET',
@@ -84,7 +137,9 @@ class NetworkInterceptor {
             requestBody: requestBody,
             responseBody: { error: (error as Error).message },
             responseHeaders: {},
-            statusCode: 0
+            statusCode: 0,
+            type: type,
+            ...(analyticsId && { analyticsId })
           };
 
           this.sendNetworkData(sessionData);
@@ -133,11 +188,22 @@ class NetworkInterceptor {
         const originalOnReadyStateChange = xhr.onreadystatechange;
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4) {
-            // Ne capturer QUE POST /session
+            // Capturer POST /session ET POST /autosave
             const isSessionPost = url.includes('api.sunflower-land.com/session') && method === 'POST';
+            const isAutosavePost = url.includes('api.sunflower-land.com/autosave') && method === 'POST';
+            const shouldCapture = isSessionPost || isAutosavePost;
             
-            if (isSessionPost) {
-              console.log('🟢 POST /session DÉTECTÉ (XHR):', url);
+            if (shouldCapture) {
+              if (isSessionPost) {
+                console.log('🟢 POST /session DÉTECTÉ (XHR):', url);
+              } else if (isAutosavePost) {
+                console.log('🔄 POST /autosave DÉTECTÉ (XHR):', url);
+                // Extraire l'analyticsId pour les logs
+                const match = url.match(/\/autosave\/(\d+)/);
+                if (match) {
+                  console.log('🎯 analyticsId extrait (XHR):', match[1]);
+                }
+              }
             }
             
             let responseBody: any = undefined;
@@ -150,8 +216,20 @@ class NetworkInterceptor {
               // Ignorer les erreurs de parsing
             }
 
-            // Ne sauvegarder QUE POST /session
-            if (isSessionPost) {
+            // Sauvegarder POST /session ET POST /autosave
+            if (shouldCapture) {
+              // Déterminer le type et extraire l'analyticsId si nécessaire
+              const type = isSessionPost ? 'session' : 'autosave';
+              let analyticsId: string | undefined = undefined;
+              
+              if (isAutosavePost) {
+                // Extraire l'analyticsId depuis l'URL (/autosave/147896)
+                const match = url.match(/\/autosave\/(\d+)/);
+                if (match) {
+                  analyticsId = match[1];
+                }
+              }
+              
               const sessionData: SunflowerSessionData = {
                 timestamp: startTime,
                 method: method,
@@ -159,7 +237,9 @@ class NetworkInterceptor {
                 requestBody: requestBody,
                 responseBody: responseBody,
                 responseHeaders: self.parseResponseHeaders(xhr.getAllResponseHeaders()),
-                statusCode: xhr.status
+                statusCode: xhr.status,
+                type: type,
+                ...(analyticsId && { analyticsId })
               };
 
               self.sendNetworkData(sessionData);
@@ -206,7 +286,14 @@ class NetworkInterceptor {
       data: data
     }, '*');
     
-    console.log('Données réseau envoyées via postMessage:', data.method, data.url);
+    const logPrefix = data.type === 'autosave' ? '🔄' : '🟢';
+    console.log(`${logPrefix} Données envoyées via postMessage:`, {
+      type: data.type,
+      method: data.method,
+      url: data.url,
+      analyticsId: data.analyticsId,
+      hasResponseBody: !!data.responseBody
+    });
   }
 }
 

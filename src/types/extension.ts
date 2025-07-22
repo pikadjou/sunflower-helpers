@@ -74,7 +74,16 @@ export type ExtensionMessage =
   | AutoModeChangedMessage
   | GetSettingsMessage
   | NetworkMonitoringMessage
-  | GetSessionDataMessage;
+  | GetSessionDataMessage
+  | OptimizationActionMessage
+  | AutosaveUpdateMessage;
+
+
+export interface OptimizationActionMessage extends MessageRequest {
+  action: 'optimizationAction';
+  suggestionType: string;
+  parameters?: Record<string, any>;
+}
 
 // Types pour les éléments DOM spécifiques à l'extension
 export interface SunflowerHelperUI extends HTMLElement {
@@ -93,7 +102,8 @@ export enum ExtensionAction {
   UPDATE_STATS = 'updateStats',
   TOGGLE_FROM_KEYBOARD = 'toggleFromKeyboard',
   NETWORK_REQUEST = 'networkRequest',
-  GET_SESSION_DATA = 'getSessionData'
+  GET_SESSION_DATA = 'getSessionData',
+  AUTOSAVE_UPDATE = 'autosaveUpdate'
 }
 
 export enum ActivityAction {
@@ -128,12 +138,21 @@ export interface SunflowerSessionData {
   requestHeaders?: Record<string, string>;
   responseHeaders?: Record<string, string>;
   statusCode?: number;
+  type?: 'session' | 'autosave'; // Type de requête
+  analyticsId?: string; // ID de tracking pour les autosaves
 }
 
 // Types pour le monitoring réseau
 export interface NetworkMonitoringMessage extends MessageRequest {
   action: 'networkRequest';
   data?: SunflowerSessionData;
+}
+
+// Message pour les mises à jour en temps réel
+export interface AutosaveUpdateMessage extends MessageRequest {
+  action: 'autosaveUpdate';
+  data: SunflowerGameData;
+  analyticsId: string;
 }
 
 export interface GetSessionDataMessage extends MessageRequest {
@@ -158,22 +177,144 @@ export interface SunflowerGameData {
   bumpkin?: {
     experience: number;
     level: number;
+    achievements?: Record<string, any>;
+    skills?: Record<string, any>;
+    wearables?: Record<string, any>;
     [key: string]: any;
   };
   inventory?: Record<string, string>;
-  chickens?: Record<string, any>;
-  cows?: Record<string, any>;
-  sheep?: Record<string, any>;
-  buildings?: Record<string, any>;
-  stones?: Record<string, any>;
-  trees?: Record<string, any>;
-  iron?: Record<string, any>;
-  gold?: Record<string, any>;
-  crimstones?: Record<string, any>;
-  oil?: Record<string, any>;
-  beehives?: Record<string, any>;
+  buildings?: Record<string, BuildingData>;
+  stones?: Record<string, ResourceData>;
+  trees?: Record<string, ResourceData>;
+  iron?: Record<string, ResourceData>;
+  gold?: Record<string, ResourceData>;
+  crimstones?: Record<string, ResourceData>;
+  oil?: Record<string, ResourceData>;
+  beehives?: Record<string, BeehiveData>;
   fruitPatches?: Record<string, any>;
-  flowers?: Record<string, any>;
-  crops?: Record<string, any>;
+  flowers?: Record<string, FlowerData>;
+  crops?: Record<string, CropData>;
+  bank?: BankData;
+  dailyRewards?: DailyRewardsData;
+  delivery?: DeliveryData;
+  airdrops?: Record<string, any>;
+  announcements?: any[];
+  analyticsId?: string;
+  deviceTrackerId?: string;
   [key: string]: any;
 }
+
+
+// Types pour les bâtiments
+export interface BuildingData {
+  id?: string;
+  name?: string;
+  type?: string;
+  coordinates?: {
+    x: number;
+    y: number;
+  };
+  crafting?: {
+    item: string;
+    startedAt: number;
+    timeRequired: number;
+    ingredients: Record<string, number>;
+  };
+  readyAt?: number;
+  [key: string]: any;
+}
+
+// Types pour les ressources
+export interface ResourceData {
+  id?: string;
+  type?: string;
+  amount?: number;
+  stone?: {
+    amount: number;
+    minedAt?: number;
+  };
+  wood?: {
+    amount: number;
+    choppedAt?: number;
+  };
+  minesLeft?: number;
+  coordinates?: {
+    x: number;
+    y: number;
+  };
+  [key: string]: any;
+}
+
+// Types pour les ruches
+export interface BeehiveData {
+  id?: string;
+  honey?: {
+    produced: number;
+    updatedAt: number;
+  };
+  flowers?: {
+    attachedAt: number;
+    attachedUntil: number;
+    rate: number;
+  };
+  swarm?: boolean;
+  coordinates?: {
+    x: number;
+    y: number;
+  };
+  [key: string]: any;
+}
+
+// Types pour les fleurs
+export interface FlowerData {
+  id?: string;
+  plantedAt?: number;
+  amount?: number;
+  attachedAt?: number;
+  attachedUntil?: number;
+  rate?: number;
+  coordinates?: {
+    x: number;
+    y: number;
+  };
+  [key: string]: any;
+}
+
+// Types pour les cultures
+export interface CropData {
+  id?: string;
+  crop?: string;
+  plantedAt?: number;
+  harvestsLeft?: number;
+  harvestedAt?: number;
+  amount?: number;
+  coordinates?: {
+    x: number;
+    y: number;
+  };
+  [key: string]: any;
+}
+
+// Types pour les données bancaires
+export interface BankData {
+  taxFreeSFL?: string;
+  withdrawnAmount?: string;
+  [key: string]: any;
+}
+
+// Types pour les récompenses quotidiennes
+export interface DailyRewardsData {
+  streaks?: number;
+  chest?: {
+    collectedAt: number;
+    [key: string]: any;
+  };
+  [key: string]: any;
+}
+
+// Types pour les livraisons
+export interface DeliveryData {
+  dailySFL?: number;
+  [key: string]: any;
+}
+
