@@ -39,11 +39,5 @@
       "run_at": "document_idle",
       "world": "MAIN"
     }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["src/templates/*.html"],
-      "matches": ["<all_urls>"]
-    }
   ]
 }

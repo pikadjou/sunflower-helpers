@@ -50,10 +50,6 @@ module.exports = {
           from: 'icons/**/*', 
           to: 'icons/[name][ext]',
           noErrorOnMissing: true
-        },
-        {
-          from: 'src/templates/*.html',
-          to: 'src/templates/[name][ext]'
         }
       ],
     }),

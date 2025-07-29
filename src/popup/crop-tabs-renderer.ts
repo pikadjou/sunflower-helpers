@@ -5,13 +5,30 @@ import { TimerManager } from './analytics-utils';
  * Optimized crop tabs renderer using HTML templates
  */
 export class CropTabsRenderer {
-  private static currentInterval: number | null = null;
+  private static readonly CROP_ICONS: Record<string, string> = {
+    'Potato': '🥔',
+    'Pumpkin': '🎃',
+    'Carrot': '🥕',
+    'Cabbage': '🥬',
+    'Beetroot': '🦠',
+    'Cauliflower': '🥦',
+    'Parsnip': '🥕',
+    'Eggplant': '🍆',
+    'Corn': '🌽',
+    'Radish': '🤬',
+    'Wheat': '🌾',
+    'Kale': '🥬',
+    'Blueberry': '🫐',
+    'Orange': '🍊',
+    'Apple': '🍎',
+    'Banana': '🍌',
+    'Sunflower': '🌻'
+  };
 
   /**
    * Main render method
    */
   static async render(gameData: SunflowerGameData | null): Promise<void> {
-    this.cleanup();
     
     const container = document.getElementById('activeTimers');
     if (!container) return;
@@ -71,30 +88,30 @@ export class CropTabsRenderer {
    * Group timers by crop type
    */
   private static groupTimersByCrop(timers: any[]): Record<string, any[]> {
-    const groups: Record<string, any[]> = {};
+    const groups = new Map<string, any[]>();
     
+    // Group timers
     timers.forEach(timer => {
       const cropName = timer.name || 'Culture inconnue';
-      if (!groups[cropName]) {
-        groups[cropName] = [];
+      const existing = groups.get(cropName);
+      if (existing) {
+        existing.push(timer);
+      } else {
+        groups.set(cropName, [timer]);
       }
-      groups[cropName].push(timer);
     });
     
-    // Trier les groupes par nom de culture
+    // Sort and convert to object
     const sortedGroups: Record<string, any[]> = {};
-    Object.keys(groups)
+    Array.from(groups.keys())
       .sort()
       .forEach(key => {
-        // Trier les timers dans chaque groupe par temps restant
-        const groupTimers = groups[key];
-        if (groupTimers) {
-          sortedGroups[key] = groupTimers.sort((a, b) => {
-            if (a.isReady && !b.isReady) return 1;
-            if (!a.isReady && b.isReady) return -1;
-            return a.remainingTime - b.remainingTime;
-          });
-        }
+        const groupTimers = groups.get(key)!;
+        sortedGroups[key] = groupTimers.sort((a, b) => {
+          if (a.isReady && !b.isReady) return 1;
+          if (!a.isReady && b.isReady) return -1;
+          return a.remainingTime - b.remainingTime;
+        });
       });
     
     return sortedGroups;
@@ -159,23 +176,15 @@ export class CropTabsRenderer {
    * Calculate and format end date
    */
   private static calculateEndDate(timer: any): string {
-    if (timer.isReady) {
-      return 'Maintenant';
-    }
-    
-    if (timer.remainingTime <= 0) {
-      return 'Bientôt';
-    }
+    if (timer.isReady) return 'Maintenant';
+    if (timer.remainingTime <= 0) return 'Bientôt';
     
     const now = new Date();
     const endTime = new Date(now.getTime() + timer.remainingTime);
     
     // Si c'est aujourd'hui, afficher seulement l'heure
     if (endTime.toDateString() === now.toDateString()) {
-      return endTime.toLocaleTimeString('fr-FR', {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+      return endTime.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
     }
     
     // Sinon afficher date + heure
@@ -272,29 +281,8 @@ export class CropTabsRenderer {
    * Get crop icon
    */
   private static getCropIcon(cropName: string): string {
-    const icons: Record<string, string> = {
-      'Potato': '🥔',
-      'Pumpkin': '🎃',
-      'Carrot': '🥕',
-      'Cabbage': '🥬',
-      'Beetroot': '🦠',
-      'Cauliflower': '🥦',
-      'Parsnip': '🥕',
-      'Eggplant': '🍆',
-      'Corn': '🌽',
-      'Radish': '🤬',
-      'Wheat': '🌾',
-      'Kale': '🥬',
-      'Blueberry': '🫐',
-      'Orange': '🍊',
-      'Apple': '🍎',
-      'Banana': '🍌',
-      'Sunflower': '🌻'
-    };
-    
-    // Nettoyer le nom de la culture (enlever les chiffres, espaces, etc.)
     const cleanName = cropName.replace(/[0-9\s]+/g, '').trim();
-    return icons[cleanName] || '🌱';
+    return this.CROP_ICONS[cleanName] || '🌱';
   }
 
   /**
@@ -309,28 +297,11 @@ export class CropTabsRenderer {
    * Hide other sections
    */
   private static hideOtherSections(): void {
-    const sectionsToHide = [
-      'scheduledActivities',
-      'harvestCalendar', 
-      'optimizationSuggestions'
-    ];
-    
+    const sectionsToHide = ['scheduledActivities', 'harvestCalendar', 'optimizationSuggestions'];
     sectionsToHide.forEach(sectionId => {
       const element = document.getElementById(sectionId);
-      if (element) {
-        element.style.display = 'none';
-      }
+      if (element) element.style.display = 'none';
     });
-  }
-
-  /**
-   * Cleanup intervals
-   */
-  private static cleanup(): void {
-    if (this.currentInterval !== null) {
-      clearInterval(this.currentInterval);
-      this.currentInterval = null;
-    }
   }
 }
 
