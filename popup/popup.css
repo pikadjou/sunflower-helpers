@@ -48,68 +48,225 @@
   padding: 15px;
 }
 
-.simple-timers h3 {
-  margin: 0 0 15px 0;
-  color: #333;
-  font-size: 16px;
+/* Header */
+.timers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
 }
 
-.timer-list {
+.timers-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.timers-header .total-count {
+  background: #667eea;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Crop Groups */
+.crop-group {
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.crop-group-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.crop-group-header:hover {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.crop-group-header.collapsed {
+  border-bottom: none;
+}
+
+.crop-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.collapse-indicator {
+  font-size: 12px;
+  color: #666;
+  transition: transform 0.2s ease;
+  min-width: 16px;
+  text-align: center;
+}
+
+.crop-group-header.collapsed .collapse-indicator {
+  transform: rotate(-90deg);
+}
+
+.crop-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
   gap: 8px;
+}
+
+.crop-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.crop-stats span {
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.ready-count {
+  background: #d4edda;
+  color: #155724;
+}
+
+.growing-count {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.next-harvest {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+  font-size: 11px;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Crop Timers */
+.crop-timers {
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform-origin: top;
+}
+
+.crop-timers[style*="display: none"] {
+  opacity: 0;
+  transform: scaleY(0);
 }
 
 .timer-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
-  background: #f9f9f9;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
   transition: all 0.2s ease;
 }
 
+.timer-item:last-child {
+  border-bottom: none;
+}
+
+.timer-item:hover {
+  background: #f8f9fa;
+}
+
 .timer-item.ready {
-  background: #e8f5e8;
-  border-color: #4caf50;
-  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.1);
+  background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+  border-left: 4px solid #4caf50;
 }
 
 .timer-item.growing {
-  background: #fff3e0;
-  border-color: #ff9800;
+  background: linear-gradient(135deg, #fff3e0 0%, #ffeaa7 100%);
+  border-left: 4px solid #ff9800;
 }
 
-.timer-name {
-  font-weight: 600;
-  color: #333;
+.timer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   flex: 1;
 }
 
-.timer-time {
-  font-family: monospace;
-  font-weight: 600;
+.timer-plot {
+  font-size: 12px;
   color: #666;
-  margin: 0 10px;
+  font-weight: 500;
+}
+
+/* Heure de fin - Élément principal */
+.timer-end-date-main {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 16px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.timer-item.ready .timer-end-date-main {
+  color: #27ae60;
+  font-size: 18px;
+}
+
+.timer-item.growing .timer-end-date-main {
+  color: #e67e22;
+}
+
+/* Temps restant - Élément secondaire */
+.timer-time-secondary {
+  font-family: 'Courier New', monospace;
+  font-weight: 400;
+  color: #7f8c8d;
+  font-size: 11px;
+  opacity: 0.8;
 }
 
 .timer-status {
   font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background: rgba(0,0,0,0.05);
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-align: center;
+  min-width: 80px;
 }
 
 .timer-item.ready .timer-status {
   background: #4caf50;
   color: white;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
 }
 
 .timer-item.growing .timer-status {
   background: #ff9800;
   color: white;
+  box-shadow: 0 2px 4px rgba(255, 152, 0, 0.3);
 }
 
 /* Update Notification */
