@@ -1,0 +1,92 @@
+VÉRIFICATION DES CALCULS DE BONUS - Comparaison Code vs Documentation
+========================================================================
+
+BONUS DE YIELD (Additifs selon documentation):
+=============================================
+
+1. SCARECROW:
+   Code: multiplier += 0.2 (20%)
+   Doc:  "+20% crop yield"
+   Status: ✅ CORRECT
+
+2. SIR GOLDENSNOUT:
+   Code: multiplier += 0.5 (+0.5 yield)
+   Doc:  "+0.5 crop yield (4x4 AOE)"
+   Status: ✅ CORRECT
+
+3. GNOME:
+   Code: multiplier += 10 (pour medium/advanced crops)
+   Doc:  "+10 yield to medium/advanced crops"
+   Status: ✅ CORRECT
+
+4. SCARY MIKE:
+   Code: multiplier += 0.2 (base) ou +0.3 (avec Horror Mike skill)
+   Doc:  "Scary Mike - +0.2 yield (+0.3 avec Horror Mike skill)"
+   Status: ✅ CORRECT
+
+5. LAURIE THE CHUCKLE CROW:
+   Code: multiplier += 0.2 (base) ou +0.3 (avec Laurie's Gains skill)
+   Doc:  "Laurie the Chuckle Crow - +0.2 yield (+0.3 avec Laurie's Gains skill)"
+   Status: ✅ CORRECT
+
+6. SKILLS DE BASE:
+   - Young Farmer: +0.1 yield pour basic crops ✅
+   - Experienced Farmer: +0.1 yield pour medium crops ✅  
+   - Old Farmer: +0.1 yield pour advanced crops ✅
+
+BONUS DE VITESSE (Multiplicatifs selon documentation):
+=====================================================
+
+1. GREEN THUMB:
+   Code: multiplier *= 0.95 (5% reduction)
+   Doc:  "5% reduction in plot crop growth time, multiplier: 0.95"
+   Status: ✅ CORRECT
+
+2. BASIC SCARECROW:
+   Code: multiplier *= 0.8 (base) ou 0.7 (avec Chonky Scarecrow)
+   Doc:  "20% reduction (30% avec Chonky Scarecrow skill)"
+   Status: ✅ CORRECT
+
+3. MAGGOT:
+   Code: multiplier *= 0.8 (20% reduction)
+   Doc:  "20% reduction in growth time"
+   Status: ✅ CORRECT
+
+4. TIME WARP TOTEM:
+   Code: multiplier *= 0.5 (50% reduction)
+   Doc:  "50% reduction in plot crop growth time"
+   Status: ✅ CORRECT
+
+MÉTHODE DE CALCUL:
+==================
+
+YIELD (Additif):
+Code: let multiplier = 1.0; multiplier += bonus1 + bonus2 + ...
+Doc:  "Applied additively (+0.1 + 0.2 + 0.25 = +0.55 total yield)"
+Status: ✅ CORRECT
+
+SPEED (Multiplicatif):
+Code: let multiplier = 1.0; multiplier *= factor1 * factor2 * ...
+Doc:  "Applied multiplicatively (0.5 * 0.85 * 0.9 = 0.3825 final multiplier)"
+Status: ✅ CORRECT
+
+CATÉGORIES DE CROPS:
+===================
+Code définit:
+- Basic: ['Sunflower', 'Potato', 'Pumpkin', 'Carrot', 'Cabbage', 'Beetroot', 'Cauliflower', 'Parsnip', 'Radish', 'Wheat']
+- Medium: ['Turnip', 'Rhubarb', 'Yam', 'Broccoli', 'Soybean', 'Pepper']
+- Advanced: ['Kale', 'Eggplant', 'Corn', 'Onion', 'Barley', 'Rice', 'Olive', 'Artichoke']
+
+Doc définit:
+- Basic: "Harvest time <= 30 minutes"
+- Medium: "Harvest time between 30 minutes and 16 hours"
+- Advanced: "Harvest time >= 16 hours"
+
+⚠️ ATTENTION: Mes catégories sont basées sur des listes hardcodées, 
+pas sur les temps de harvest. Cela pourrait causer des incohérences.
+
+RÉSULTAT GLOBAL:
+===============
+✅ Tous les bonus individuels sont corrects
+✅ Les méthodes de calcul (additif vs multiplicatif) sont correctes
+⚠️ La catégorisation des crops devrait être basée sur les temps réels

@@ -32,6 +32,12 @@
       "js": ["network-interceptor/network-interceptor.js"],
       "run_at": "document_start",
       "world": "MAIN"
+    },
+    {
+      "matches": ["https://sunflower-land.com/*"],
+      "js": ["timer-manager/timer-manager.js"],
+      "run_at": "document_idle",
+      "world": "MAIN"
     }
   ],
   "web_accessible_resources": [

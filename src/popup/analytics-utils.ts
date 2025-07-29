@@ -13,8 +13,13 @@ export interface ActiveTimer {
   type: 'crop' | 'building' | 'beehive' | 'resource' | 'fruit';
   name: string;
   remainingTime: number;
+  remainingTimeFormatted: string;
   totalTime: number;
+  totalTimeFormatted: string;
   isReady: boolean;
+  baseYield?: number;      // Quantité de base (sans bonus)
+  expectedYield?: number;  // Quantité attendue (avec bonus)
+  yieldBonus?: number;     // Pourcentage de bonus appliqué
 }
 
 export interface ScheduledActivity {
@@ -45,16 +50,7 @@ export interface OptimizationSuggestion {
 
 export class TimerManager {
   static calculateTimers(gameData: SunflowerGameData): TimerData {
-    console.log('🔍 TimerManager.calculateTimers démarré avec:', {
-      gameData: !!gameData,
-      crops: gameData?.crops ? Object.keys(gameData.crops) : 'undefined',
-      beehives: gameData?.beehives ? Object.keys(gameData.beehives) : 'undefined',
-      buildings: gameData?.buildings ? Object.keys(gameData.buildings) : 'undefined'
-    });
-
-    // Ensure gameData exists before proceeding
     if (!gameData) {
-      console.log('❌ Pas de gameData, retour de données vides');
       return {
         activeTimers: [],
         scheduledActivities: [],
@@ -69,10 +65,7 @@ export class TimerManager {
     const optimizationSuggestions: OptimizationSuggestion[] = [];
 
     try {
-      // Analyse des cultures
-      console.log('🌾 Analyse des cultures...');
       this.analyzeCrops(gameData, activeTimers);
-      console.log('🌾 Cultures analysées, timers trouvés:', activeTimers.length);
       
       // Analyse des bâtiments (cuisson)
       this.analyzeBuildings(gameData, activeTimers);
@@ -89,11 +82,10 @@ export class TimerManager {
       // Générer des suggestions d'optimisation
       this.generateOptimizationSuggestions(gameData, optimizationSuggestions);
     } catch (error) {
-      console.error('❌ Erreur lors de l\'analyse des timers:', error);
     }
 
     return {
-      activeTimers: activeTimers.sort((a, b) => a.remainingTime - b.remainingTime),
+      activeTimers: this.sortTimers(activeTimers),
       scheduledActivities: scheduledActivities.sort((a, b) => a.scheduledTime - b.scheduledTime),
       harvestCalendar: harvestCalendar.sort((a, b) => a.harvestTime - b.harvestTime),
       optimizationSuggestions
@@ -104,79 +96,58 @@ export class TimerManager {
     const crops = gameData.crops || {};
     const now = Date.now();
     
-    console.log('🌾 Analyse des crops - structures trouvées:', {
-      gameDataKeys: Object.keys(gameData),
-      cropsCount: Object.keys(crops).length,
-      firstCrop: Object.values(crops)[0],
-      state: gameData['state'] ? Object.keys(gameData['state']) : 'undefined'
+    // Pour l'instant, utiliser seulement les données JSON pour garantir l'affichage
+    this.processJsonOnly(crops, now, timers);
+  }
+  
+  private static processJsonOnly(crops: any, now: number, timers: ActiveTimer[]): void {
+    Object.entries(crops).forEach(([plotId, plotData]: [string, any]) => {
+      this.processJsonCrop(plotId, plotData, now, timers, '');
     });
+  }
+  
+  private static processJsonCrop(plotId: string, plotData: any, now: number, timers: ActiveTimer[], _suffix: string): void {
+    const crop = plotData.crop;
+    if (!crop) return;
     
-    // Si pas de crops direct, chercher dans state
-    if (Object.keys(crops).length === 0 && gameData['state']) {
-      console.log('🌾 Recherche dans gameData.state:', gameData['state']);
-    }
+    const plantedAt = crop.plantedAt || crop.planted_at || crop.createdAt;
+    const cropName = crop.name || crop.type;
     
-    Object.entries(crops).forEach(([id, plotData]: [string, any]) => {
-      console.log(`🌾 Plot ${id}:`, plotData);
+    if (plantedAt && cropName) {
+      let harvestTime;
+      let remainingTime;
+      let isCurrentlyReady;
       
-      // Dans Sunflower Land, l'info de crop est dans plotData.crop
-      const crop = plotData.crop;
-      if (!crop) {
-        console.log(`🌾 Plot ${id} vide - pas de crop`);
+      if (crop.readyAt) {
+        harvestTime = crop.readyAt;
+        remainingTime = Math.max(0, harvestTime - now);
+        isCurrentlyReady = remainingTime === 0;
+      } else if (crop.harvestAt) {
+        harvestTime = crop.harvestAt;
+        remainingTime = Math.max(0, harvestTime - now);
+        isCurrentlyReady = remainingTime === 0;
+      } else if (crop.harvestedAt) {
         return;
-      }
-      
-      const plantedAt = crop.plantedAt || crop.planted_at || crop.createdAt;
-      const cropName = crop.name || crop.type;
-      const amount = crop.amount || crop.quantity || 1;
-      
-      
-      if (plantedAt && cropName) {
-        let remainingTime: number;
-        let totalTime: number;
-        let isCurrentlyReady: boolean;
-        
-        // Utiliser currentTime et expectedEndTime pour calculer précisément
-        if (crop.currentTime && crop.expectedEndTime) {
-          // Calculer la différence entre expectedEndTime et currentTime du jeu
-          const gameDuration = crop.expectedEndTime - crop.currentTime;
-          // Ajouter cette durée à la date actuelle réelle
-          const realEndTime = now + gameDuration;
-          remainingTime = Math.max(0, realEndTime - now);
-          totalTime = crop.totalTime || gameDuration;
-          isCurrentlyReady = remainingTime === 0;
-          
-          console.log(`🌾 ${cropName}: gameDuration=${gameDuration}ms, remainingTime=${remainingTime}ms`);
-        } else if (crop.remainingTime !== undefined && crop.totalTime !== undefined) {
-          // Fallback: utiliser les données pré-calculées
-          remainingTime = crop.remainingTime;
-          totalTime = crop.totalTime;
-          isCurrentlyReady = crop.isReady || remainingTime === 0;
-        } else {
-          // Fallback: calculer manuellement (données brutes uniquement)
-          console.warn(`⚠️ Pas de timing pour ${cropName}, calcul manuel`);
-          const plantedTime = plantedAt;
-          const growthTime = this.getCropGrowthTime(cropName);
-          const harvestTime = plantedTime + growthTime;
-          remainingTime = Math.max(0, harvestTime - now);
-          totalTime = growthTime;
-          isCurrentlyReady = remainingTime === 0;
-        }
-        
-        timers.push({
-          id: `crop-${id}`,
-          type: 'crop',
-          name: `${cropName} x${amount}`,
-          remainingTime,
-          totalTime,
-          isReady: isCurrentlyReady
-        });
-        
-        console.log(`🌾 Timer ajouté pour ${cropName}: ${remainingTime > 0 ? 'en cours' : 'prêt'}`);
+      } else if (crop.amount === 0 || crop.quantity === 0) {
+        return;
       } else {
-        console.log(`🌾 Crop ${id} ignoré - pas de plantedAt (${plantedAt}) ou cropName (${cropName})`);
+        const baseGrowthTime = this.getCropGrowthTime(cropName);
+        harvestTime = plantedAt + baseGrowthTime;
+        remainingTime = Math.max(0, harvestTime - now);
+        isCurrentlyReady = remainingTime === 0;
       }
-    });
+      
+      timers.push({
+        id: `crop-${plotId}`,
+        type: 'crop',
+        name: cropName,
+        remainingTime,
+        remainingTimeFormatted: this.formatTime(remainingTime),
+        totalTime: harvestTime - (plantedAt || 0),
+        totalTimeFormatted: this.formatTime(harvestTime - (plantedAt || 0)),
+        isReady: isCurrentlyReady
+      });
+    }
   }
 
 
@@ -184,14 +155,7 @@ export class TimerManager {
     const buildings = gameData.buildings || {};
     const now = Date.now();
     
-    console.log('🏠 Analyse des buildings:', {
-      buildingsCount: Object.keys(buildings).length,
-      sampleBuilding: Object.values(buildings)[0],
-      allBuildings: buildings
-    });
-    
     Object.entries(buildings).forEach(([id, building]: [string, any]) => {
-      console.log(`🏠 Building ${id}:`, building);
       
       // Essayer différentes structures possibles pour le cooking
       const crafting = building.crafting || building.cooking || building.production;
@@ -210,13 +174,11 @@ export class TimerManager {
           type: 'building',
           name: `${buildingName} (${item})`,
           remainingTime,
+          remainingTimeFormatted: this.formatTime(remainingTime),
           totalTime: duration,
+          totalTimeFormatted: this.formatTime(duration),
           isReady: remainingTime === 0
         });
-        
-        console.log(`🏠 Timer ajouté pour ${buildingName}: ${item} - ${remainingTime > 0 ? 'en cours' : 'prêt'}`);
-      } else {
-        console.log(`🏠 Building ${id} ignoré - pas de crafting/cooking en cours`);
       }
     });
   }
@@ -253,9 +215,180 @@ export class TimerManager {
   }
 
   private static getCropGrowthTime(cropType: string): number {
-    // Fonction de fallback pour les données sans timing pré-calculé
-    console.warn(`⚠️ Utilisation du fallback getCropGrowthTime pour "${cropType}"`);
+    // Charger les données du JSON
+    const cropData = this.loadCropData();
+    
+    // Chercher dans toutes les catégories
+    for (const category of ['basic', 'medium', 'advanced']) {
+      const categoryData = cropData.crops?.[category];
+      if (categoryData && categoryData[cropType]) {
+        const seconds = categoryData[cropType].harvestSeconds?.seconds;
+        if (seconds) {
+          return seconds * 1000; // Convertir secondes en millisecondes
+        }
+      }
+    }
+    
     return 60 * 60 * 1000; // Par défaut 1 heure
+  }
+
+  private static loadCropData(): any {
+    // En attendant l'import du JSON, retourner les données de base
+    // TODO: Implémenter le chargement dynamique du JSON
+    try {
+      // Simuler les données principales du JSON pour validation immédiate
+      return {
+        crops: {
+          basic: {
+            'Sunflower': { harvestSeconds: { seconds: 60 } },
+            'Potato': { harvestSeconds: { seconds: 300 } },
+            'Rhubarb': { harvestSeconds: { seconds: 600 } },
+            'Pumpkin': { harvestSeconds: { seconds: 1800 } },
+            'Carrot': { harvestSeconds: { seconds: 3600 } },
+            'Cabbage': { harvestSeconds: { seconds: 7200 } },
+            'Beetroot': { harvestSeconds: { seconds: 14400 } },
+            'Cauliflower': { harvestSeconds: { seconds: 28800 } },
+            'Parsnip': { harvestSeconds: { seconds: 43200 } },
+            'Radish': { harvestSeconds: { seconds: 86400 } },
+            'Wheat': { harvestSeconds: { seconds: 86400 } }
+          },
+          medium: {
+            'Zucchini': { harvestSeconds: { seconds: 1800 } },
+            'Yam': { harvestSeconds: { seconds: 3600 } },
+            'Broccoli': { harvestSeconds: { seconds: 7200 } },
+            'Soybean': { harvestSeconds: { seconds: 10800 } },
+            'Pepper': { harvestSeconds: { seconds: 14400 } },
+            'Turnip': { harvestSeconds: { seconds: 86400 } }
+          },
+          advanced: {
+            'Eggplant': { harvestSeconds: { seconds: 57600 } },
+            'Corn': { harvestSeconds: { seconds: 72000 } },
+            'Onion': { harvestSeconds: { seconds: 72000 } },
+            'Kale': { harvestSeconds: { seconds: 129600 } },
+            'Artichoke': { harvestSeconds: { seconds: 129600 } },
+            'Barley': { harvestSeconds: { seconds: 172800 } },
+            'Rice': { harvestSeconds: { seconds: 115200 } },
+            'Olive': { harvestSeconds: { seconds: 158400 } }
+          }
+        }
+      };
+    } catch (error) {
+      return { crops: {} };
+    }
+  }
+
+  // FONCTION SUPPRIMÉE - Plus de calcul de bonus
+  
+  // FONCTIONS SUPPRIMÉES - Plus de calcul de bonus
+  
+
+  // FONCTIONS SUPPRIMÉES - Plus de calcul de bonus
+
+  private static formatTime(milliseconds: number): string {
+    if (milliseconds <= 0) return '0s';
+    
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    
+    let parts = [];
+    if (days > 0) parts.push(`${days}j`);
+    if (hours > 0) parts.push(`${hours}h`);
+    if (minutes > 0) parts.push(`${minutes}m`);
+    if (seconds > 0 && days === 0) parts.push(`${seconds}s`); // Ne pas afficher secondes si > 1 jour
+    
+    if (parts.length === 0) parts.push('0s');
+    
+    // Limiter à 2 unités maximum pour éviter "1j 2h 3m 4s"
+    return parts.slice(0, 2).join(' ');
+  }
+
+  private static sortTimers(timers: ActiveTimer[]): ActiveTimer[] {
+    // Séparer les crops prêts des autres
+    const readyCrops = timers.filter(t => t.isReady && t.type === 'crop');
+    const otherTimers = timers.filter(t => !(t.isReady && t.type === 'crop'));
+    
+    // Grouper les crops prêts par type de crop
+    const groupedReadyCrops = this.groupReadyCrops(readyCrops);
+    
+    // Trier les autres timers normalement
+    const sortedOthers = otherTimers.sort((a, b) => {
+      if (a.isReady !== b.isReady) {
+        return a.isReady ? -1 : 1;
+      }
+      
+      if (a.isReady && b.isReady) {
+        return a.name.localeCompare(b.name);
+      } else {
+        return a.remainingTime - b.remainingTime;
+      }
+    });
+    
+    // Combiner: crops groupés d'abord, puis autres timers
+    return [...groupedReadyCrops, ...sortedOthers];
+  }
+
+  private static groupReadyCrops(readyCrops: ActiveTimer[]): ActiveTimer[] {
+    // Grouper par nom de crop (sans la quantité)
+    const groups: Map<string, ActiveTimer[]> = new Map();
+    
+    readyCrops.forEach(timer => {
+      // Extraire le nom du crop sans les informations de quantité/bonus
+      const nameWithoutQuantity = timer.name.split(' x')[0];
+      const cropName = nameWithoutQuantity ? nameWithoutQuantity.split(' (')[0] : timer.name;
+      
+      if (cropName && !groups.has(cropName)) {
+        groups.set(cropName, []);
+      }
+      if (cropName) {
+        const group = groups.get(cropName);
+        if (group) {
+          group.push(timer);
+        }
+      }
+    });
+    
+    // Créer des timers groupés
+    const groupedTimers: ActiveTimer[] = [];
+    
+    groups.forEach((cropTimers, cropName) => {
+      if (cropTimers.length === 1) {
+        // Un seul crop, garder tel quel
+        const singleTimer = cropTimers[0];
+        if (singleTimer) {
+          groupedTimers.push(singleTimer);
+        }
+      } else {
+        // Plusieurs crops du même type, créer un timer groupé
+        const totalExpectedYield = cropTimers.reduce((sum, timer) => sum + (timer.expectedYield || 0), 0);
+        const totalBaseYield = cropTimers.reduce((sum, timer) => sum + (timer.baseYield || 0), 0);
+        const avgYieldBonus = cropTimers.reduce((sum, timer) => sum + (timer.yieldBonus || 0), 0) / cropTimers.length;
+        
+        const firstTimer = cropTimers[0];
+        if (firstTimer) {
+          const groupedTimer: ActiveTimer = {
+            id: `grouped-${cropName}`,
+            type: 'crop',
+            name: `${cropName} x${totalExpectedYield.toFixed(1)} (${cropTimers.length} parcelles)`,
+            remainingTime: 0,
+            remainingTimeFormatted: 'PRÊT',
+            totalTime: firstTimer.totalTime,
+            totalTimeFormatted: firstTimer.totalTimeFormatted,
+            isReady: true,
+            baseYield: totalBaseYield,
+            expectedYield: totalExpectedYield,
+            yieldBonus: Math.round(avgYieldBonus)
+          };
+          
+          groupedTimers.push(groupedTimer);
+        }
+      }
+    });
+    
+    // Trier les crops groupés par nom
+    return groupedTimers.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   /* private static estimateCropValue(cropType: string, amount: number): number {
@@ -298,7 +431,9 @@ export class TimerManager {
             type: 'beehive',
             name: `Ruche ${id} (${honeyProduced.toFixed(1)} miel)`,
             remainingTime,
+            remainingTimeFormatted: this.formatTime(remainingTime),
             totalTime: honeyProductionRate,
+            totalTimeFormatted: this.formatTime(honeyProductionRate),
             isReady: false
           });
         } else {
@@ -307,7 +442,9 @@ export class TimerManager {
             type: 'beehive',
             name: `Ruche ${id} (${honeyProduced.toFixed(1)} miel) - PRÊTE`,
             remainingTime: 0,
+            remainingTimeFormatted: this.formatTime(0),
             totalTime: honeyProductionRate,
+            totalTimeFormatted: this.formatTime(honeyProductionRate),
             isReady: true
           });
         }
@@ -328,14 +465,6 @@ export class TimerManager {
   private static analyzeResources(gameData: SunflowerGameData, timers: ActiveTimer[], activities: ScheduledActivity[]): void {
     const now = Date.now();
     
-    console.log('🪨 Analyse des resources:', {
-      gameDataKeys: Object.keys(gameData),
-      stones: gameData.stones ? Object.keys(gameData.stones).length : 0,
-      trees: gameData.trees ? Object.keys(gameData.trees).length : 0,
-      iron: gameData.iron ? Object.keys(gameData.iron).length : 0,
-      gold: gameData.gold ? Object.keys(gameData.gold).length : 0
-    });
-    
     // Analyse des pierres
     const stones = gameData.stones || {};
     Object.entries(stones).forEach(([id, stone]: [string, any]) => {
@@ -351,7 +480,9 @@ export class TimerManager {
             type: 'resource',
             name: `Pierre ${id} (respawn)`,
             remainingTime,
+            remainingTimeFormatted: this.formatTime(remainingTime),
             totalTime: respawnTime,
+            totalTimeFormatted: this.formatTime(respawnTime),
             isReady: false
           });
         }
@@ -382,7 +513,9 @@ export class TimerManager {
             type: 'resource',
             name: `Bois ${id} (respawn)`,
             remainingTime,
+            remainingTimeFormatted: this.formatTime(remainingTime),
             totalTime: respawnTime,
+            totalTimeFormatted: this.formatTime(respawnTime),
             isReady: false
           });
         }
@@ -413,7 +546,9 @@ export class TimerManager {
             type: 'resource',
             name: `Fer ${id} (respawn)`,
             remainingTime,
+            remainingTimeFormatted: this.formatTime(remainingTime),
             totalTime: respawnTime,
+            totalTimeFormatted: this.formatTime(respawnTime),
             isReady: false
           });
         }
@@ -444,7 +579,9 @@ export class TimerManager {
             type: 'resource',
             name: `Or ${id} (respawn)`,
             remainingTime,
+            remainingTimeFormatted: this.formatTime(remainingTime),
             totalTime: respawnTime,
+            totalTimeFormatted: this.formatTime(respawnTime),
             isReady: false
           });
         }
@@ -495,7 +632,9 @@ export class TimerManager {
             type: 'fruit',
             name: `${fruitType} ${id}`,
             remainingTime,
+            remainingTimeFormatted: this.formatTime(remainingTime),
             totalTime: this.getFruitGrowthTime(fruitType),
+            totalTimeFormatted: this.formatTime(this.getFruitGrowthTime(fruitType)),
             isReady: false
           });
         } else {
@@ -504,7 +643,9 @@ export class TimerManager {
             type: 'fruit',
             name: `${fruitType} ${id} - PRÊT`,
             remainingTime: 0,
+            remainingTimeFormatted: this.formatTime(0),
             totalTime: this.getFruitGrowthTime(fruitType),
+            totalTimeFormatted: this.formatTime(this.getFruitGrowthTime(fruitType)),
             isReady: true
           });
         }

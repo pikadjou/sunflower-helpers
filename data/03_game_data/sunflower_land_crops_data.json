@@ -1,0 +1,1172 @@
+{
+  "crops": {
+    "basic": {
+      "Sunflower": {
+        "name": "Sunflower",
+        "harvestSeconds": {
+          "seconds": 60,
+          "formatted": "1m"
+        },
+        "sellPrice": 0.02,
+        "seedName": "Sunflower Seed",
+        "seedPrice": 0.01,
+        "bumpkinLevel": 1,
+        "category": "basic"
+      },
+      "Potato": {
+        "name": "Potato",
+        "harvestSeconds": {
+          "seconds": 300,
+          "formatted": "5m"
+        },
+        "sellPrice": 0.14,
+        "seedName": "Potato Seed",
+        "seedPrice": 0.1,
+        "bumpkinLevel": 1,
+        "category": "basic"
+      },
+      "Rhubarb": {
+        "name": "Rhubarb",
+        "harvestSeconds": {
+          "seconds": 600,
+          "formatted": "10m"
+        },
+        "sellPrice": 0.24,
+        "seedName": "Rhubarb Seed",
+        "seedPrice": 0.15,
+        "bumpkinLevel": 1,
+        "category": "basic"
+      },
+      "Pumpkin": {
+        "name": "Pumpkin",
+        "harvestSeconds": {
+          "seconds": 1800,
+          "formatted": "30m"
+        },
+        "sellPrice": 0.4,
+        "seedName": "Pumpkin Seed",
+        "seedPrice": 0.2,
+        "bumpkinLevel": 2,
+        "category": "basic"
+      },
+      "Zucchini": {
+        "name": "Zucchini",
+        "harvestSeconds": {
+          "seconds": 1800,
+          "formatted": "30m"
+        },
+        "sellPrice": 0.4,
+        "seedName": "Zucchini Seed",
+        "seedPrice": 0.2,
+        "bumpkinLevel": 2,
+        "category": "basic"
+      }
+    },
+    "medium": {
+      "Carrot": {
+        "name": "Carrot",
+        "harvestSeconds": {
+          "seconds": 3600,
+          "formatted": "1h"
+        },
+        "sellPrice": 0.8,
+        "seedName": "Carrot Seed",
+        "seedPrice": 0.5,
+        "bumpkinLevel": 2,
+        "category": "medium"
+      },
+      "Yam": {
+        "name": "Yam",
+        "harvestSeconds": {
+          "seconds": 3600,
+          "formatted": "1h"
+        },
+        "sellPrice": 0.8,
+        "seedName": "Yam Seed",
+        "seedPrice": 0.5,
+        "bumpkinLevel": 2,
+        "category": "medium"
+      },
+      "Cabbage": {
+        "name": "Cabbage",
+        "harvestSeconds": {
+          "seconds": 7200,
+          "formatted": "2h"
+        },
+        "sellPrice": 1.5,
+        "seedName": "Cabbage Seed",
+        "seedPrice": 1,
+        "bumpkinLevel": 3,
+        "category": "medium"
+      },
+      "Broccoli": {
+        "name": "Broccoli",
+        "harvestSeconds": {
+          "seconds": 7200,
+          "formatted": "2h"
+        },
+        "sellPrice": 1.5,
+        "seedName": "Broccoli Seed",
+        "seedPrice": 1,
+        "bumpkinLevel": 3,
+        "category": "medium"
+      },
+      "Soybean": {
+        "name": "Soybean",
+        "harvestSeconds": {
+          "seconds": 10800,
+          "formatted": "3h"
+        },
+        "sellPrice": 2.3,
+        "seedName": "Soybean Seed",
+        "seedPrice": 1.5,
+        "bumpkinLevel": 3,
+        "category": "medium"
+      },
+      "Beetroot": {
+        "name": "Beetroot",
+        "harvestSeconds": {
+          "seconds": 14400,
+          "formatted": "4h"
+        },
+        "sellPrice": 2.8,
+        "seedName": "Beetroot Seed",
+        "seedPrice": 2,
+        "bumpkinLevel": 3,
+        "category": "medium"
+      },
+      "Pepper": {
+        "name": "Pepper",
+        "harvestSeconds": {
+          "seconds": 14400,
+          "formatted": "4h"
+        },
+        "sellPrice": 3,
+        "seedName": "Pepper Seed",
+        "seedPrice": 2,
+        "bumpkinLevel": 3,
+        "category": "medium"
+      },
+      "Cauliflower": {
+        "name": "Cauliflower",
+        "harvestSeconds": {
+          "seconds": 28800,
+          "formatted": "8h"
+        },
+        "sellPrice": 4.25,
+        "seedName": "Cauliflower Seed",
+        "seedPrice": 3,
+        "bumpkinLevel": 4,
+        "category": "medium"
+      }
+    },
+    "advanced": {
+      "Parsnip": {
+        "name": "Parsnip",
+        "harvestSeconds": {
+          "seconds": 43200,
+          "formatted": "12h"
+        },
+        "sellPrice": 6.5,
+        "seedName": "Parsnip Seed",
+        "seedPrice": 5,
+        "bumpkinLevel": 4,
+        "category": "advanced"
+      },
+      "Eggplant": {
+        "name": "Eggplant",
+        "harvestSeconds": {
+          "seconds": 57600,
+          "formatted": "16h"
+        },
+        "sellPrice": 8,
+        "seedName": "Eggplant Seed",
+        "seedPrice": 6,
+        "bumpkinLevel": 5,
+        "category": "advanced"
+      },
+      "Corn": {
+        "name": "Corn",
+        "harvestSeconds": {
+          "seconds": 72000,
+          "formatted": "20h"
+        },
+        "sellPrice": 9,
+        "seedName": "Corn Seed",
+        "seedPrice": 7,
+        "bumpkinLevel": 5,
+        "category": "advanced"
+      },
+      "Onion": {
+        "name": "Onion",
+        "harvestSeconds": {
+          "seconds": 72000,
+          "formatted": "20h"
+        },
+        "sellPrice": 10,
+        "seedName": "Onion Seed",
+        "seedPrice": 7,
+        "bumpkinLevel": 5,
+        "category": "advanced"
+      },
+      "Radish": {
+        "name": "Radish",
+        "harvestSeconds": {
+          "seconds": 86400,
+          "formatted": "1d"
+        },
+        "sellPrice": 9.5,
+        "seedName": "Radish Seed",
+        "seedPrice": 7,
+        "bumpkinLevel": 5,
+        "category": "advanced"
+      },
+      "Wheat": {
+        "name": "Wheat",
+        "harvestSeconds": {
+          "seconds": 86400,
+          "formatted": "1d"
+        },
+        "sellPrice": 7,
+        "seedName": "Wheat Seed",
+        "seedPrice": 5,
+        "bumpkinLevel": 5,
+        "category": "advanced"
+      },
+      "Turnip": {
+        "name": "Turnip",
+        "harvestSeconds": {
+          "seconds": 86400,
+          "formatted": "1d"
+        },
+        "sellPrice": 8,
+        "seedName": "Turnip Seed",
+        "seedPrice": 5,
+        "bumpkinLevel": 6,
+        "category": "advanced"
+      },
+      "Kale": {
+        "name": "Kale",
+        "harvestSeconds": {
+          "seconds": 129600,
+          "formatted": "1d 12h"
+        },
+        "sellPrice": 10,
+        "seedName": "Kale Seed",
+        "seedPrice": 7,
+        "bumpkinLevel": 7,
+        "category": "advanced"
+      },
+      "Artichoke": {
+        "name": "Artichoke",
+        "harvestSeconds": {
+          "seconds": 129600,
+          "formatted": "1d 12h"
+        },
+        "sellPrice": 12,
+        "seedName": "Artichoke Seed",
+        "seedPrice": 7,
+        "bumpkinLevel": 8,
+        "category": "advanced"
+      },
+      "Barley": {
+        "name": "Barley",
+        "harvestSeconds": {
+          "seconds": 172800,
+          "formatted": "2d"
+        },
+        "sellPrice": 12,
+        "seedName": "Barley Seed",
+        "seedPrice": 10,
+        "bumpkinLevel": 14,
+        "category": "advanced"
+      }
+    },
+    "exotic": {
+      "White Carrot": {
+        "name": "White Carrot",
+        "sellPrice": 800
+      },
+      "Warty Goblin Pumpkin": {
+        "name": "Warty Goblin Pumpkin",
+        "sellPrice": 1600
+      },
+      "Adirondack Potato": {
+        "name": "Adirondack Potato",
+        "sellPrice": 2400
+      },
+      "Purple Cauliflower": {
+        "name": "Purple Cauliflower",
+        "sellPrice": 3200
+      },
+      "Chiogga": {
+        "name": "Chiogga",
+        "sellPrice": 8000
+      },
+      "Golden Helios": {
+        "name": "Golden Helios",
+        "sellPrice": 16000
+      },
+      "Black Magic": {
+        "name": "Black Magic",
+        "sellPrice": 32000
+      }
+    },
+    "greenhouse": {
+      "Rice": {
+        "name": "Rice",
+        "harvestSeconds": {
+          "seconds": 115200,
+          "formatted": "1d 8h"
+        },
+        "sellPrice": 320
+      }
+    }
+  },
+  "globalSpeedBonuses": {
+    "Time Warp Totem": {
+      "name": "Time Warp Totem",
+      "type": "speed",
+      "effect": "2x speed (50% reduction in time)",
+      "multiplier": 0.5,
+      "duration": "2 hours",
+      "durationType": "temporary",
+      "affects": ["all crops", "trees", "fruits", "cooking", "minerals"],
+      "stackable": false,
+      "restrictions": ["Cannot stack with Super Totem"],
+      "source": "craftable"
+    },
+    "Super Totem": {
+      "name": "Super Totem",
+      "type": "speed",
+      "effect": "2x speed (50% reduction in time)",
+      "multiplier": 0.5,
+      "duration": "7 days",
+      "durationType": "temporary",
+      "affects": ["all crops", "trees", "fruits", "cooking", "minerals"],
+      "stackable": false,
+      "restrictions": ["Cannot stack with Time Warp Totem"],
+      "source": "craftable"
+    },
+    "Harvest Hourglass": {
+      "name": "Harvest Hourglass",
+      "type": "speed",
+      "effect": "25% reduction in crop growth time",
+      "multiplier": 0.75,
+      "duration": "6 hours",
+      "durationType": "temporary",
+      "affects": ["all crops"],
+      "stackable": true,
+      "source": "craftable"
+    },
+    "Lunar Calendar": {
+      "name": "Lunar Calendar",
+      "type": "speed",
+      "effect": "10% reduction in crop growth time",
+      "multiplier": 0.9,
+      "duration": "permanent",
+      "durationType": "permanent",
+      "affects": ["all crops", "greenhouse crops"],
+      "stackable": true,
+      "source": "collectible"
+    },
+    "Nancy": {
+      "name": "Nancy",
+      "type": "speed",
+      "effect": "15% reduction in crop growth time",
+      "multiplier": 0.85,
+      "duration": "permanent",
+      "durationType": "permanent",
+      "affects": ["all crops"],
+      "stackable": true,
+      "restrictions": ["Disabled if Scarecrow or Kuebiko active"],
+      "source": "collectible"
+    },
+    "Green Thumb": {
+      "name": "Green Thumb",
+      "type": "speed",
+      "skill": true,
+      "effect": "5% reduction in plot crop growth time",
+      "multiplier": 0.95,
+      "duration": "permanent",
+      "durationType": "permanent",
+      "affects": ["plot crops"],
+      "stackable": true,
+      "source": "skill",
+      "tree": "Crops"
+    }
+  },
+  "categoryBonuses": {
+    "basicCrops": {
+      "Basic Scarecrow": {
+        "name": "Basic Scarecrow",
+        "effect": "20% reduction in growth time",
+        "enhancedEffect": "30% reduction with Chonky Scarecrow skill",
+        "aoe": "3x3 (7x7 with Chonky Scarecrow skill)",
+        "affects": [
+          "Sunflower",
+          "Potato",
+          "Rhubarb",
+          "Pumpkin",
+          "Zucchini"
+        ],
+        "skill": "Chonky Scarecrow"
+      },
+      "Young Farmer": {
+        "name": "Young Farmer",
+        "skill": true,
+        "effect": "+0.1 Basic Crop yield",
+        "affects": [
+          "basic crops"
+        ]
+      }
+    },
+    "mediumCrops": {
+      "Scary Mike": {
+        "name": "Scary Mike",
+        "effect": "+0.2 medium crop yield",
+        "enhancedEffect": "+0.3 with Horror Mike skill",
+        "aoe": "3x3 (7x7 with Horror Mike skill)",
+        "affects": [
+          "Carrot",
+          "Yam",
+          "Cabbage",
+          "Broccoli",
+          "Soybean",
+          "Beetroot",
+          "Pepper",
+          "Cauliflower"
+        ],
+        "skill": "Horror Mike"
+      },
+      "Experienced Farmer": {
+        "name": "Experienced Farmer",
+        "skill": true,
+        "effect": "+0.1 Medium Crop yield",
+        "affects": [
+          "medium crops"
+        ]
+      }
+    },
+    "advancedCrops": {
+      "Laurie the Chuckle Crow": {
+        "name": "Laurie the Chuckle Crow",
+        "effect": "+0.2 advanced crop yield",
+        "enhancedEffect": "+0.3 with Laurie's Gains skill",
+        "aoe": "3x3 (7x7 with Laurie's Gains skill)",
+        "affects": [
+          "Parsnip",
+          "Eggplant",
+          "Corn",
+          "Onion",
+          "Radish",
+          "Wheat",
+          "Turnip",
+          "Kale",
+          "Artichoke",
+          "Barley"
+        ],
+        "skill": "Laurie's Gains"
+      },
+      "Strong Roots": {
+        "name": "Strong Roots",
+        "skill": true,
+        "effect": "10% reduction in advanced crop growth time",
+        "affects": [
+          "advanced crops"
+        ]
+      },
+      "Old Farmer": {
+        "name": "Old Farmer",
+        "skill": true,
+        "effect": "+0.1 Advanced Crop yield",
+        "affects": [
+          "advanced crops"
+        ]
+      }
+    }
+  },
+  "cropSpecificBonuses": {
+    "Sunflower": {
+      "Stellar Sunflower": {
+        "name": "Stellar Sunflower",
+        "type": "yield",
+        "effect": "3% chance of +10 Sunflower",
+        "source": "mutant crop",
+        "rarity": "rare"
+      },
+      "Golden Sunflower": {
+        "name": "Golden Sunflower",
+        "type": "special",
+        "skill": true,
+        "effect": "1/700 chance for 0.35 gold when harvesting",
+        "source": "skill",
+        "tree": "Crops"
+      },
+      "Sunflower Amulet": {
+        "name": "Sunflower Amulet",
+        "type": "yield",
+        "wearable": true,
+        "effect": "+10% Sunflower yield",
+        "source": "wearable"
+      },
+      "Sunflower Shield": {
+        "name": "Sunflower Shield",
+        "type": "special",
+        "wearable": true,
+        "effect": "Free Sunflower Seeds",
+        "source": "wearable"
+      }
+    },
+    "Potato": {
+      "Potent Potato": {
+        "name": "Potent Potato",
+        "type": "yield",
+        "effect": "3% chance of +10 Potato",
+        "source": "mutant crop",
+        "rarity": "rare"
+      },
+      "Peeled Potato": {
+        "name": "Peeled Potato",
+        "type": "yield",
+        "effect": "20% chance for +1 Potato",
+        "source": "collectible"
+      }
+    },
+    "Pumpkin": {
+      "Lab Grown Pumpkin": {
+        "name": "Lab Grown Pumpkin",
+        "type": "yield",
+        "effect": "+0.3 Pumpkin yield",
+        "source": "collectible"
+      },
+      "Victoria Sisters": {
+        "name": "Victoria Sisters",
+        "type": "yield",
+        "effect": "+20% Pumpkin yield",
+        "source": "collectible"
+      },
+      "Freya Fox": {
+        "name": "Freya Fox",
+        "type": "yield",
+        "effect": "+0.5 Pumpkin yield",
+        "source": "collectible"
+      }
+    },
+    "Carrot": {
+      "Lab Grown Carrot": {
+        "name": "Lab Grown Carrot",
+        "type": "yield",
+        "effect": "+0.2 Carrot yield",
+        "source": "collectible"
+      },
+      "Easter Bunny": {
+        "name": "Easter Bunny",
+        "type": "yield",
+        "effect": "+20% Carrot yield",
+        "source": "collectible"
+      },
+      "Pablo Bunny": {
+        "name": "Pablo Bunny",
+        "type": "yield",
+        "effect": "+0.1 Carrot yield",
+        "source": "collectible"
+      },
+      "Carrot Sword": {
+        "name": "Carrot Sword",
+        "type": "special",
+        "effect": "4x chance of mutant crop",
+        "source": "collectible"
+      },
+      "Carrot Amulet": {
+        "name": "Carrot Amulet",
+        "type": "speed",
+        "wearable": true,
+        "effect": "-20% Carrot growth time",
+        "source": "wearable"
+      }
+    },
+    "Cabbage": {
+      "Cabbage Girl": {
+        "name": "Cabbage Girl",
+        "type": "speed",
+        "effect": "-50% Cabbage growth time",
+        "source": "collectible"
+      },
+      "Cabbage Boy": {
+        "name": "Cabbage Boy",
+        "type": "yield",
+        "effect": "+0.25 Cabbage yield",
+        "enhancedEffect": "+0.5 Cabbage yield when Cabbage Girl is also present",
+        "source": "collectible"
+      },
+      "Karkinos": {
+        "name": "Karkinos",
+        "type": "yield",
+        "effect": "+0.1 Cabbage yield",
+        "restrictions": ["Disabled if Cabbage Boy active"],
+        "source": "collectible"
+      }
+    },
+    "Beetroot": {
+      "Beetroot Amulet": {
+        "name": "Beetroot Amulet",
+        "type": "yield",
+        "wearable": true,
+        "effect": "+20% Beetroot yield",
+        "source": "wearable"
+      }
+    },
+    "Cauliflower": {
+      "Golden Cauliflower": {
+        "name": "Golden Cauliflower",
+        "type": "yield",
+        "effect": "+100% Cauliflower yield (2x multiplier)",
+        "source": "collectible"
+      }
+    },
+    "Parsnip": {
+      "Mysterious Parsnip": {
+        "name": "Mysterious Parsnip",
+        "type": "speed",
+        "effect": "-50% Parsnip growth time",
+        "source": "collectible"
+      },
+      "Parsnip Boost": {
+        "name": "Parsnip Boost",
+        "type": "yield",
+        "wearable": true,
+        "effect": "+20% Parsnip yield",
+        "source": "wearable"
+      }
+    },
+    "Eggplant": {
+      "Obie": {
+        "name": "Obie",
+        "type": "speed",
+        "effect": "-25% Eggplant growth time",
+        "source": "collectible"
+      },
+      "Maximus": {
+        "name": "Maximus",
+        "type": "yield",
+        "effect": "+1 Eggplant yield",
+        "source": "collectible"
+      },
+      "Purple Trail": {
+        "name": "Purple Trail",
+        "type": "yield",
+        "effect": "+0.2 Eggplant yield",
+        "source": "collectible"
+      },
+      "Eggplant Onesie": {
+        "name": "Eggplant Onesie",
+        "type": "yield",
+        "wearable": true,
+        "effect": "+0.1 Eggplant yield",
+        "source": "wearable"
+      }
+    },
+    "Corn": {
+      "Kernaldo": {
+        "name": "Kernaldo",
+        "type": "speed",
+        "effect": "-25% Corn growth time",
+        "source": "collectible"
+      },
+      "Queen Cornelia": {
+        "name": "Queen Cornelia",
+        "type": "yield",
+        "effect": "+1 Corn yield",
+        "aoe": "3x4 area",
+        "source": "collectible"
+      },
+      "Poppy": {
+        "name": "Poppy",
+        "type": "yield",
+        "effect": "+0.1 Corn yield",
+        "source": "collectible"
+      },
+      "Corn Onesie": {
+        "name": "Corn Onesie",
+        "type": "yield",
+        "wearable": true,
+        "effect": "+0.1 Corn yield",
+        "source": "wearable"
+      }
+    },
+    "Radish": {
+      "Lab Grown Radish": {
+        "name": "Lab Grown Radish",
+        "type": "yield",
+        "effect": "+0.4 Radish yield",
+        "source": "collectible"
+      },
+      "Radical Radish": {
+        "name": "Radical Radish",
+        "type": "yield",
+        "effect": "3% chance of +10 Radish",
+        "source": "mutant crop",
+        "rarity": "rare"
+      },
+      "Hoot": {
+        "name": "Hoot",
+        "type": "yield",
+        "effect": "+0.5 Radish yield (also affects Wheat, Kale, Rice, Barley)",
+        "source": "collectible"
+      }
+    },
+    "Wheat": {
+      "Hoot": {
+        "name": "Hoot",
+        "type": "yield",
+        "effect": "+0.5 Wheat yield (also affects Radish, Kale, Rice, Barley)",
+        "source": "collectible"
+      }
+    },
+    "Kale": {
+      "Foliant": {
+        "name": "Foliant",
+        "type": "yield",
+        "effect": "+0.2 Kale yield",
+        "source": "collectible"
+      },
+      "Hoot": {
+        "name": "Hoot",
+        "type": "yield",
+        "effect": "+0.5 Kale yield (also affects Wheat, Radish, Rice, Barley)",
+        "source": "collectible"
+      }
+    }
+  },
+  "fertilizers": {
+    "Rapid Root": {
+      "name": "Rapid Root",
+      "type": "speed",
+      "effect": "50% reduction in crop growth time from plots",
+      "usage": "Applied to individual plots",
+      "duration": "One harvest cycle",
+      "source": "composter",
+      "stackable": false
+    },
+    "Sprout Mix": {
+      "name": "Sprout Mix", 
+      "type": "yield",
+      "effect": "+0.2 crop yield increase from plots",
+      "enhancedEffect": "+0.4 crop yield with Knowledge Crab",
+      "usage": "Applied to individual plots",
+      "duration": "One harvest cycle",
+      "source": "composter",
+      "stackable": false
+    },
+    "Fruitful Blend": {
+      "name": "Fruitful Blend",
+      "type": "yield", 
+      "effect": "+0.1 fruit yield per fruit patch",
+      "enhancedEffect": "+0.2 fruit yield with Fruitful Bounty skill",
+      "usage": "Applied to individual fruit patches",
+      "duration": "One harvest cycle",
+      "source": "composter",
+      "stackable": false
+    }
+  },
+  "skills": {
+    "cropRelated": {
+      "Green Thumb": {
+        "name": "Green Thumb",
+        "tree": "Crops",
+        "effect": "5% reduction in plot crop growth time"
+      },
+      "Young Farmer": {
+        "name": "Young Farmer",
+        "tree": "Crops",
+        "effect": "+0.1 Basic Crop yield"
+      },
+      "Experienced Farmer": {
+        "name": "Experienced Farmer",
+        "tree": "Crops",
+        "effect": "+0.1 Medium Crop yield"
+      },
+      "Old Farmer": {
+        "name": "Old Farmer",
+        "tree": "Crops",
+        "effect": "+0.1 Advanced Crop yield"
+      },
+      "Strong Roots": {
+        "name": "Strong Roots",
+        "tree": "Crops",
+        "effect": "10% reduction in advanced crop growth time"
+      },
+      "Chonky Scarecrow": {
+        "name": "Chonky Scarecrow",
+        "tree": "Crops",
+        "effect": "Increases Basic Scarecrow's AOE to 7x7; Additional -10% basic crop growth time"
+      },
+      "Horror Mike": {
+        "name": "Horror Mike",
+        "tree": "Crops",
+        "effect": "Increases Scary Mike's AOE to 7x7; Additional +0.1 medium crop yield"
+      },
+      "Laurie's Gains": {
+        "name": "Laurie's Gains",
+        "tree": "Crops",
+        "effect": "Increases Laurie the Chuckle Crow's AOE to 7x7; Additional +0.1 advanced crop yield"
+      },
+      "Golden Sunflower": {
+        "name": "Golden Sunflower",
+        "tree": "Crops",
+        "effect": "1/700 chance for 0.35 gold when harvesting sunflowers"
+      },
+      "Coin Swindler": {
+        "name": "Coin Swindler",
+        "tree": "Crops",
+        "effect": "+10% coins when selling plot crops at the Market"
+      },
+      "Seed Specialist": {
+        "name": "Seed Specialist",
+        "tree": "Crops",
+        "effect": "Crop growth speed bonus"
+      }
+    },
+    "composting": {
+      "Premium Worms": {
+        "name": "Premium Worms",
+        "tree": "Composting",
+        "effect": "+10 Rapid Root"
+      },
+      "Swift Decomposer": {
+        "name": "Swift Decomposer",
+        "tree": "Composting",
+        "effect": "10% reduction in compost time"
+      },
+      "Composting Bonanza": {
+        "name": "Composting Bonanza",
+        "tree": "Composting",
+        "effect": "Speed up composters by an additional hour when boosting",
+        "debuff": "2x resources to boost composters"
+      },
+      "Efficient Bin": {
+        "name": "Efficient Bin",
+        "tree": "Composting",
+        "effect": "+5 Sprout Mix"
+      },
+      "Fruitful Bounty": {
+        "name": "Fruitful Bounty",
+        "tree": "Composting",
+        "effect": "Double Fruitful Blend's Effect"
+      }
+    },
+    "cropMachine": {
+      "Crop Processor Unit": {
+        "name": "Crop Processor Unit",
+        "tree": "Machinery",
+        "effect": "5% reduction in Crop Machine growth time",
+        "debuff": "+10% Oil consumption in Crop Machine"
+      },
+      "Rapid Rig": {
+        "name": "Rapid Rig",
+        "tree": "Machinery",
+        "effect": "20% reduction in Crop Machine growth time",
+        "debuff": "+40% Oil consumption in Crop Machine"
+      },
+      "Oil Gadget": {
+        "name": "Oil Gadget",
+        "tree": "Machinery",
+        "effect": "10% reduction in Oil consumption in Crop Machine"
+      },
+      "Efficiency Extension Module": {
+        "name": "Efficiency Extension Module",
+        "tree": "Machinery",
+        "effect": "30% reduction in Oil consumption in Crop Machine"
+      },
+      "Field Expansion Module": {
+        "name": "Field Expansion Module",
+        "tree": "Machinery",
+        "effect": "+5 packs added to machine queue system"
+      },
+      "Field Extension Module": {
+        "name": "Field Extension Module",
+        "tree": "Machinery",
+        "effect": "+5 plots added to Crop Machine (15 total)"
+      },
+      "Leak Proof Tank": {
+        "name": "Leak Proof Tank",
+        "tree": "Machinery",
+        "effect": "Triple oil tank capacity in crop machine"
+      }
+    }
+  },
+  "seasonalBonuses": {
+    "sunshower": {
+      "name": "Sunshower Event",
+      "effect": "50% reduction in crop growth time",
+      "seasonal": true
+    }
+  },
+  "cropMachine": {
+    "basicSeeds": [
+      "Sunflower Seed",
+      "Potato Seed",
+      "Pumpkin Seed"
+    ],
+    "extensionModI": [
+      "Rhubarb Seed",
+      "Zucchini Seed"
+    ],
+    "extensionModII": [
+      "Carrot Seed",
+      "Cabbage Seed"
+    ],
+    "extensionModIII": [
+      "Yam Seed",
+      "Broccoli Seed"
+    ],
+    "basePlots": 10,
+    "maxPlotsWithSkill": 15,
+    "baseQueueSize": 5,
+    "maxQueueSizeWithSkill": 10
+  },
+  "wearables": {
+    "Angel Wings": {
+      "name": "Angel Wings",
+      "type": "speed",
+      "effect": "30% chance of instant crops",
+      "category": "special"
+    },
+    "Devil Wings": {
+      "name": "Devil Wings",
+      "type": "speed", 
+      "effect": "30% chance of instant crops",
+      "category": "special"
+    },
+    "Sunflower Amulet": {
+      "name": "Sunflower Amulet",
+      "type": "yield",
+      "effect": "+10% Sunflower yield",
+      "category": "crop-specific"
+    },
+    "Sunflower Shield": {
+      "name": "Sunflower Shield",
+      "type": "special",
+      "effect": "Free Sunflower Seeds",
+      "category": "crop-specific"
+    },
+    "Carrot Amulet": {
+      "name": "Carrot Amulet",
+      "type": "speed",
+      "effect": "-20% Carrot growth time",
+      "category": "crop-specific"
+    },
+    "Beetroot Amulet": {
+      "name": "Beetroot Amulet",
+      "type": "yield",
+      "effect": "+20% Beetroot yield",
+      "category": "crop-specific"  
+    },
+    "Green Amulet": {
+      "name": "Green Amulet",
+      "type": "special",
+      "effect": "10% chance for 10x crops",
+      "category": "all-crops"
+    },
+    "Eggplant Onesie": {
+      "name": "Eggplant Onesie",
+      "type": "yield",
+      "effect": "+0.1 Eggplant yield",
+      "category": "crop-specific"
+    },
+    "Corn Onesie": {
+      "name": "Corn Onesie", 
+      "type": "yield",
+      "effect": "+0.1 Corn yield",
+      "category": "crop-specific"
+    },
+    "Infernal Pitchfork": {
+      "name": "Infernal Pitchfork",
+      "type": "yield",
+      "effect": "+3 crops",
+      "category": "all-crops"
+    },
+    "Bumpkin Quiver": {
+      "name": "Bumpkin Quiver",
+      "type": "yield", 
+      "effect": "+0.25 crops and fruits",
+      "category": "all-crops"
+    },
+    "Goblin Quiver": {
+      "name": "Goblin Quiver",
+      "type": "yield",
+      "effect": "+0.25 crops and fruits", 
+      "category": "all-crops"
+    },
+    "Nightshade Quiver": {
+      "name": "Nightshade Quiver",
+      "type": "yield",
+      "effect": "+0.25 crops and fruits",
+      "category": "all-crops"
+    },
+    "Sunflorian Quiver": {
+      "name": "Sunflorian Quiver", 
+      "type": "yield",
+      "effect": "+0.25 crops and fruits",
+      "category": "all-crops"
+    }
+  },
+  "specialBonuses": {
+    "Sir Goldensnout": {
+      "name": "Sir Goldensnout",
+      "type": "yield",
+      "effect": "+0.5 crop yield",
+      "aoe": "4x4 area",
+      "source": "collectible",
+      "description": "Royal member, infuses farm with sovereign prosperity"
+    },
+    "Kuebiko": {
+      "name": "Kuebiko",
+      "type": "special",
+      "effect": "Free seeds for all crops",
+      "source": "collectible",
+      "restrictions": ["Disables Nancy and Scarecrow bonuses"]
+    },
+    "Scarecrow": {
+      "name": "Scarecrow",
+      "type": "yield",
+      "effect": "+20% crop yield",
+      "source": "collectible",
+      "restrictions": ["Disabled if Kuebiko active"]
+    },
+    "Gnome": {
+      "name": "Gnome", 
+      "type": "yield",
+      "effect": "+10 yield to medium/advanced crops",
+      "aoe": "plot below",
+      "source": "collectible"
+    },
+    "Happy Crop": {
+      "name": "Happy Crop",
+      "type": "special", 
+      "skill": true,
+      "effect": "Chance to get 2x crops",
+      "source": "skill",
+      "tree": "Crops"
+    },
+    "Master Farmer": {
+      "name": "Master Farmer",
+      "type": "yield",
+      "skill": true,
+      "effect": "Crops yield 10% more",
+      "source": "skill",
+      "tree": "Crops"
+    },
+    "Cultivator": {
+      "name": "Cultivator",
+      "type": "speed",
+      "skill": true,
+      "effect": "Crops grow 5% quicker",
+      "source": "skill", 
+      "tree": "Crops"
+    },
+    "Green Thumb (Description)": {
+      "name": "Green Thumb (General)",
+      "type": "yield",
+      "skill": true,
+      "effect": "Crops yield 5% more",
+      "source": "skill",
+      "tree": "Crops"
+    },
+    "Instant Growth": {
+      "name": "Instant Growth",
+      "type": "special",
+      "skill": true,
+      "effect": "Ability to instantly harvest all currently growing crops in plots",
+      "source": "skill",
+      "tree": "Crops"
+    }
+  },
+  "beehiveEffects": {
+    "Bee Swarm": {
+      "name": "Bee Swarm",
+      "type": "yield",
+      "effect": "Pollination celebration - crops get boost from friendly bee swarm",
+      "trigger": "When beehive is full",
+      "chance": "10%",
+      "bonus": "+0.2 crop yield"
+    },
+    "Flower Pollination": {
+      "name": "Flower Pollination", 
+      "type": "yield",
+      "effect": "Additional crop yield after pollination",
+      "baseBonus": "+0.2 crop yield",
+      "enhancedBonus": "+0.3 crop yield with Pollen Power Up skill"
+    }
+  },
+  "vipBonuses": {
+    "Winds of Change": {
+      "name": "Winds of Change VIP",
+      "type": "yield",
+      "effect": "+0.25 New Crops yield",
+      "source": "VIP membership",
+      "seasonal": true
+    }
+  },
+  "notes": {
+    "timeConversions": {
+      "1 minute": 60,
+      "5 minutes": 300,
+      "10 minutes": 600,
+      "30 minutes": 1800,
+      "1 hour": 3600,
+      "2 hours": 7200,
+      "3 hours": 10800,
+      "4 hours": 14400,
+      "8 hours": 28800,
+      "12 hours": 43200,
+      "16 hours": 57600,
+      "20 hours": 72000,
+      "24 hours": 86400,
+      "36 hours": 129600,
+      "48 hours": 172800
+    },
+    "cropCategories": {
+      "basic": "harvestSeconds <= 1800 (Sunflower, Potato, Rhubarb, Pumpkin, Zucchini)",
+      "medium": "1800 < harvestSeconds < 57600 (Carrot, Yam, Cabbage, Broccoli, Soybean, Beetroot, Pepper, Cauliflower)",
+      "advanced": "harvestSeconds >= 57600 (Parsnip, Eggplant, Corn, Onion, Radish, Wheat, Turnip, Kale, Artichoke, Barley)",
+      "greenhouse": "Special greenhouse-only crops (Rice, Olive, Grape)"
+    },
+    "stackingRules": {
+      "globalSpeed": {
+        "timeWarpAndSuperTotem": "Cannot stack together - mutually exclusive",
+        "otherGlobalBonuses": "Most global speed bonuses stack (Nancy, Lunar Calendar, Harvest Hourglass, Green Thumb)"
+      },
+      "fertilizers": {
+        "perPlot": "Only one fertilizer type per plot at a time",
+        "withOtherBonuses": "Fertilizers stack with collectibles, skills, and wearables"
+      },
+      "collectibles": {
+        "conflictingItems": "Some collectibles disable others (Nancy vs Scarecrow/Kuebiko, Cabbage Boy vs Karkinos)",
+        "aoeItems": "Area of Effect items can affect multiple plots simultaneously"
+      },
+      "skills": "All skills stack with each other and with items/collectibles",
+      "wearables": "All wearables stack with other bonuses"
+    },
+    "bonusCalculation": {
+      "speedBonuses": "Applied multiplicatively (0.5 * 0.85 * 0.9 = 0.3825 final multiplier)",
+      "yieldBonuses": "Applied additively (+0.1 + 0.2 + 0.25 = +0.55 total yield)",
+      "percentageBonuses": "Applied multiplicatively with base yield",
+      "chanceBonuses": "Rolled independently for each harvest"
+    },
+    "aoeExplanation": {
+      "3x3": "Affects 9 plots in a square around placement location",
+      "3x4": "Queen Cornelia's unique rectangular area",
+      "4x4": "Sir Goldensnout's larger area of effect",
+      "7x7": "Enhanced AOE with specific skills (49 plots total)"
+    },
+    "importantMechanics": {
+      "mutantCrops": "Rare crops with special yield bonuses (3% chance for +10 yield)",
+      "temporaryBonuses": "Time Warp Totem and Super Totem provide strongest speed boost but are temporary",
+      "composterSystem": "Fertilizers are produced in composters and applied per plot",
+      "skillTrees": "Permanent upgrades from Crops, Composting, and Machinery trees",
+      "collectiblePlacement": "Must be strategically placed for AOE bonuses to affect desired plots"
+    }
+  }
+}

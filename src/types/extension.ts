@@ -76,7 +76,10 @@ export type ExtensionMessage =
   | NetworkMonitoringMessage
   | GetSessionDataMessage
   | OptimizationActionMessage
-  | AutosaveUpdateMessage;
+  | AutosaveUpdateMessage
+  | TimersExtractedMessage
+  | StartTimerExtractionMessage
+  | StopTimerExtractionMessage;
 
 
 export interface OptimizationActionMessage extends MessageRequest {
@@ -103,7 +106,11 @@ export enum ExtensionAction {
   TOGGLE_FROM_KEYBOARD = 'toggleFromKeyboard',
   NETWORK_REQUEST = 'networkRequest',
   GET_SESSION_DATA = 'getSessionData',
-  AUTOSAVE_UPDATE = 'autosaveUpdate'
+  AUTOSAVE_UPDATE = 'autosaveUpdate',
+  TIMERS_EXTRACTED = 'timersExtracted',
+  START_TIMER_EXTRACTION = 'startTimerExtraction',
+  STOP_TIMER_EXTRACTION = 'stopTimerExtraction',
+  EXTRACT_TIMERS_ONCE = 'extractTimersOnce'
 }
 
 export enum ActivityAction {
@@ -316,5 +323,47 @@ export interface DailyRewardsData {
 export interface DeliveryData {
   dailySFL?: number;
   [key: string]: any;
+}
+
+// Types pour l'extraction des timers DOM
+export interface ExtractedTimer {
+  id: string;                    // ID unique du timer
+  position: {                    // Position dans l'interface
+    x: number;
+    y: number;
+  };
+  cropType?: string;             // Type de crop (détecté par l'image ou contexte)
+  state: 'ready' | 'growing' | 'unknown';  // État actuel
+  timeText: string;              // Texte affiché ("Ready", "2h 30m")
+  timeRemaining?: number;        // Secondes restantes (si calculable)
+  element: HTMLElement;          // Référence DOM
+  lastUpdated: number;           // Timestamp de dernière MAJ
+  extractionMethod: string;      // Méthode utilisée pour extraire (DOM, observer, etc.)
+}
+
+export interface TimerExtractionResult {
+  timers: ExtractedTimer[];
+  extractionTimestamp: number;
+  totalFound: number;
+  readyCount: number;
+  growingCount: number;
+}
+
+// Messages pour l'extraction des timers
+export interface TimersExtractedMessage extends MessageRequest {
+  action: 'timersExtracted';
+  data: TimerExtractionResult;
+}
+
+export interface StartTimerExtractionMessage extends MessageRequest {
+  action: 'startTimerExtraction';
+  options?: {
+    interval?: number;
+    strategies?: string[];
+  };
+}
+
+export interface StopTimerExtractionMessage extends MessageRequest {
+  action: 'stopTimerExtraction';
 }
 

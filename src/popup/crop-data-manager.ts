@@ -167,21 +167,7 @@ export class CropDataManager {
     const quantity = this.extractQuantity(timer.name);
     const cropName = this.extractCropName(timer.name);
     
-    // 🔍 DEBUG SPÉCIAL POUR TURNIP vs KALE
     if (cropName === 'Turnip' || cropName === 'Kale') {
-      console.log(`🔍 CROP-DATA-MANAGER ${cropName.toUpperCase()}:`, {
-        timerId: timer.id,
-        timerName: timer.name,
-        extractedCropName: cropName,
-        quantity: quantity,
-        remainingTime: timer.remainingTime,
-        remainingTimeHours: timer.remainingTime / (60 * 60 * 1000),
-        totalTime: timer.totalTime,
-        totalTimeHours: timer.totalTime / (60 * 60 * 1000),
-        isReady: timer.isReady,
-        currentTime: Date.now(),
-        expectedEndTime: Date.now() + timer.remainingTime
-      });
     }
     
     return {
@@ -212,14 +198,7 @@ export class CropDataManager {
     const cropName = this.extractCropName(timer.name);
     
     if (timer.isReady) {
-      // 🔍 DEBUG POUR TURNIP vs KALE - CAS PRÊT
       if (cropName === 'Turnip' || cropName === 'Kale') {
-        console.log(`🔍 FORMAT-TIME ${cropName.toUpperCase()} PRÊT:`, {
-          timerId: timer.id,
-          timerName: timer.name,
-          isReady: timer.isReady,
-          remainingTime: timer.remainingTime
-        });
       }
       return '✅ Prêt à récolter';
     }
@@ -244,19 +223,7 @@ export class CropDataManager {
       minute: '2-digit'
     })}`;
     
-    // 🔍 DEBUG POUR TURNIP vs KALE - CAS EN COURS
     if (cropName === 'Turnip' || cropName === 'Kale') {
-      console.log(`🔍 FORMAT-TIME ${cropName.toUpperCase()} EN COURS:`, {
-        timerId: timer.id,
-        timerName: timer.name,
-        isReady: timer.isReady,
-        remainingTime: timer.remainingTime,
-        remainingHours: remainingHours,
-        remainingMinutes: remainingMinutes,
-        timeDisplay: timeDisplay,
-        endTime: endTime,
-        formattedTime: formattedTime
-      });
     }
     
     return formattedTime;

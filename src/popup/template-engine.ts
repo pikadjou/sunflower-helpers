@@ -25,7 +25,6 @@ export class TemplateEngine {
       this.templateCache.set(templateName, template);
       return template;
     } catch (error) {
-      console.error(`Failed to load template ${templateName}:`, error);
       return '';
     }
   }

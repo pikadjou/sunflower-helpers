@@ -43,6 +43,75 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+/* Simple Timers Styles */
+.simple-timers {
+  padding: 15px;
+}
+
+.simple-timers h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.timer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timer-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: #f9f9f9;
+  transition: all 0.2s ease;
+}
+
+.timer-item.ready {
+  background: #e8f5e8;
+  border-color: #4caf50;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.1);
+}
+
+.timer-item.growing {
+  background: #fff3e0;
+  border-color: #ff9800;
+}
+
+.timer-name {
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.timer-time {
+  font-family: monospace;
+  font-weight: 600;
+  color: #666;
+  margin: 0 10px;
+}
+
+.timer-status {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.05);
+}
+
+.timer-item.ready .timer-status {
+  background: #4caf50;
+  color: white;
+}
+
+.timer-item.growing .timer-status {
+  background: #ff9800;
+  color: white;
+}
+
 /* Update Notification */
 .update-notification {
   position: absolute;
@@ -170,6 +239,24 @@
 
 .tab-pane.active {
   display: block;
+}
+
+/* Timer Controls */
+.timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.last-extraction {
+  color: #666;
+  font-size: 0.9em;
+  font-style: italic;
 }
 
 /* Stats Grid */

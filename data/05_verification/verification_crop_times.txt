@@ -1,0 +1,62 @@
+VÉRIFICATION DES TEMPS DE CROISSANCE - Comparaison Code vs JSON Officiel
+================================================================================
+
+LÉGENDE:
+✅ = Temps identique  
+❌ = Différence trouvée
+⚠️ = Crop absent dans l'autre source
+
+FORMAT: Crop Name | Mon Code | JSON Officiel | Status
+
+BASIC CROPS:
+-----------
+Sunflower    | 60s       | 60s          | ✅
+Potato       | 300s      | 300s         | ✅  
+Pumpkin      | 1800s     | 1800s        | ✅
+
+MEDIUM CROPS:
+------------
+Carrot       | 3600s     | 3600s        | ✅
+Cabbage      | 7200s     | 7200s        | ✅
+Beetroot     | 14400s    | 14400s       | ✅
+Cauliflower  | 28800s    | 28800s       | ✅ 
+Parsnip      | 43200s    | 43200s       | ✅
+
+ADVANCED CROPS:
+--------------
+Eggplant     | 57600s    | 57600s       | ✅
+Corn         | 72000s    | 72000s       | ✅
+Radish       | 86400s    | 86400s       | ✅
+Wheat        | 86400s    | 86400s       | ✅
+Kale         | 129600s   | 129600s      | ✅
+
+CROPS DANS MON CODE MAIS PAS DANS LE JSON:
+-----------------------------------------
+Rhubarb      | 600s      | N/A          | ⚠️ Absent du JSON
+Zucchini     | 1800s     | N/A          | ⚠️ Absent du JSON  
+Yam          | 3600s     | N/A          | ⚠️ Absent du JSON
+Broccoli     | 7200s     | N/A          | ⚠️ Absent du JSON
+Soybean      | 10800s    | N/A          | ⚠️ Absent du JSON
+Pepper       | 14400s    | N/A          | ⚠️ Absent du JSON
+Onion        | 72000s    | N/A          | ⚠️ Absent du JSON
+Turnip       | 86400s    | N/A          | ⚠️ Absent du JSON
+Artichoke    | 129600s   | N/A          | ⚠️ Absent du JSON
+Barley       | 172800s   | N/A          | ⚠️ Absent du JSON
+Rice         | 115200s   | N/A          | ⚠️ Absent du JSON
+Olive        | 158400s   | N/A          | ⚠️ Absent du JSON
+
+FLOWER BEDS DANS LE JSON:
+------------------------
+Sunpetal     | N/A       | 86400s       | ⚠️ Absent de mon code
+Bloom        | N/A       | 172800s      | ⚠️ Absent de mon code
+
+ANALYSE:
+========
+✅ POSITIF: Tous les temps des crops présents dans les deux sources sont IDENTIQUES
+⚠️ ATTENTION: Mon code contient beaucoup de crops qui ne sont pas dans le JSON extrait
+   - Soit ces crops ont été supprimés du jeu
+   - Soit ils sont dans d'autres sections du code non extraites
+   - Soit ce sont des variations saisonnières
+
+RECOMMANDATION: 
+Garder uniquement les crops confirmés dans le JSON officiel pour éviter les erreurs.

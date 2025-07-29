@@ -1,0 +1,661 @@
+{
+  "sunflower_land_game_data": {
+    "version": "2024",
+    "extracted_from": "sunflower-land.com game client code",
+    "categories": {
+      "crops": {
+        "basic_crops": {
+          "sunflower": {
+            "name": "Sunflower",
+            "seed_name": "Sunflower Seed",
+            "seed_price": 0.01,
+            "sell_price": 0.02,
+            "plant_seconds": 60,
+            "harvest_seconds": 60,
+            "bumpkin_level_required": 1,
+            "planting_spot": "Crop Plot",
+            "category": "basic",
+            "experience_gained": "varies",
+            "seasonal_availability": ["spring", "summer"]
+          },
+          "potato": {
+            "name": "Potato",
+            "seed_name": "Potato Seed",
+            "seed_price": 0.1,
+            "sell_price": 0.14,
+            "plant_seconds": 300,
+            "harvest_seconds": 300,
+            "bumpkin_level_required": 1,
+            "planting_spot": "Crop Plot",
+            "category": "basic",
+            "seasonal_availability": ["summer", "autumn", "winter"]
+          },
+          "pumpkin": {
+            "name": "Pumpkin",
+            "seed_name": "Pumpkin Seed",
+            "seed_price": 0.2,
+            "sell_price": 0.4,
+            "plant_seconds": 1800,
+            "harvest_seconds": 1800,
+            "bumpkin_level_required": 2,
+            "planting_spot": "Crop Plot",
+            "category": "basic",
+            "seasonal_availability": ["autumn"]
+          }
+        },
+        "medium_crops": {
+          "carrot": {
+            "name": "Carrot",
+            "seed_name": "Carrot Seed",
+            "seed_price": 0.5,
+            "sell_price": 0.8,
+            "plant_seconds": 3600,
+            "harvest_seconds": 3600,
+            "bumpkin_level_required": 2,
+            "planting_spot": "Crop Plot",
+            "category": "medium",
+            "seasonal_availability": ["spring", "autumn"]
+          },
+          "cabbage": {
+            "name": "Cabbage",
+            "seed_name": "Cabbage Seed",
+            "seed_price": 1.0,
+            "sell_price": 1.5,
+            "plant_seconds": 7200,
+            "harvest_seconds": 7200,
+            "bumpkin_level_required": 3,
+            "planting_spot": "Crop Plot",
+            "category": "medium",
+            "seasonal_availability": ["spring", "winter"]
+          },
+          "beetroot": {
+            "name": "Beetroot",
+            "seed_name": "Beetroot Seed",
+            "seed_price": 2.0,
+            "sell_price": 2.8,
+            "plant_seconds": 14400,
+            "harvest_seconds": 14400,
+            "bumpkin_level_required": 3,
+            "planting_spot": "Crop Plot",
+            "category": "medium",
+            "seasonal_availability": ["summer", "winter"]
+          },
+          "cauliflower": {
+            "name": "Cauliflower",
+            "seed_name": "Cauliflower Seed",
+            "seed_price": 3.0,
+            "sell_price": 4.25,
+            "plant_seconds": 28800,
+            "harvest_seconds": 28800,
+            "bumpkin_level_required": 4,
+            "planting_spot": "Crop Plot",
+            "category": "medium",
+            "seasonal_availability": ["summer", "winter"]
+          },
+          "parsnip": {
+            "name": "Parsnip",
+            "seed_name": "Parsnip Seed",
+            "seed_price": 5.0,
+            "sell_price": 6.5,
+            "plant_seconds": 43200,
+            "harvest_seconds": 43200,
+            "bumpkin_level_required": 4,
+            "planting_spot": "Crop Plot",
+            "category": "medium",
+            "seasonal_availability": ["winter"]
+          }
+        },
+        "advanced_crops": {
+          "eggplant": {
+            "name": "Eggplant",
+            "seed_name": "Eggplant Seed",
+            "seed_price": 6.0,
+            "sell_price": 8.0,
+            "plant_seconds": 57600,
+            "harvest_seconds": 57600,
+            "bumpkin_level_required": 5,
+            "planting_spot": "Crop Plot",
+            "category": "advanced",
+            "seasonal_availability": ["summer"]
+          },
+          "corn": {
+            "name": "Corn",
+            "seed_name": "Corn Seed",
+            "seed_price": 7.0,
+            "sell_price": 9.0,
+            "plant_seconds": 72000,
+            "harvest_seconds": 72000,
+            "bumpkin_level_required": 5,
+            "planting_spot": "Crop Plot",
+            "category": "advanced",
+            "seasonal_availability": ["spring"]
+          },
+          "radish": {
+            "name": "Radish",
+            "seed_name": "Radish Seed",
+            "seed_price": 7.0,
+            "sell_price": 9.5,
+            "plant_seconds": 86400,
+            "harvest_seconds": 86400,
+            "bumpkin_level_required": 5,
+            "planting_spot": "Crop Plot",
+            "category": "advanced",
+            "seasonal_availability": ["summer"]
+          },
+          "wheat": {
+            "name": "Wheat",
+            "seed_name": "Wheat Seed",
+            "seed_price": 5.0,
+            "sell_price": 7.0,
+            "plant_seconds": 86400,
+            "harvest_seconds": 86400,
+            "bumpkin_level_required": 5,
+            "planting_spot": "Crop Plot",
+            "category": "advanced",
+            "seasonal_availability": ["spring", "summer", "autumn", "winter"]
+          },
+          "kale": {
+            "name": "Kale",
+            "seed_name": "Kale Seed",
+            "seed_price": 7.0,
+            "sell_price": 10.0,
+            "plant_seconds": 129600,
+            "harvest_seconds": 129600,
+            "bumpkin_level_required": 7,
+            "planting_spot": "Crop Plot",
+            "category": "advanced",
+            "seasonal_availability": ["spring", "winter"]
+          }
+        },
+        "greenhouse_crops": {
+          "requirements": {
+            "building": "Greenhouse",
+            "bumpkin_level": 46,
+            "required_island": "desert"
+          }
+        },
+        "flower_beds": {
+          "sunpetal": {
+            "name": "Sunpetal",
+            "seed_name": "Sunpetal Seed",
+            "seed_price": 16,
+            "plant_seconds": 86400,
+            "bumpkin_level_required": 13,
+            "planting_spot": "Flower Bed"
+          },
+          "bloom": {
+            "name": "Bloom",
+            "seed_name": "Bloom Seed",
+            "seed_price": 32,
+            "plant_seconds": 172800,
+            "bumpkin_level_required": 22,
+            "planting_spot": "Flower Bed"
+          }
+        }
+      },
+      "buildings": {
+        "basic_buildings": {
+          "fire_pit": {
+            "name": "Fire Pit",
+            "unlocks_at_level": 99,
+            "coins_cost": 0,
+            "construction_seconds": 0,
+            "ingredients": [
+              {"item": "Wood", "amount": 3},
+              {"item": "Stone", "amount": 2}
+            ],
+            "dimensions": {"width": 3, "height": 2},
+            "function": "Basic cooking"
+          },
+          "workbench": {
+            "name": "Workbench",
+            "unlocks_at_level": 99,
+            "coins_cost": 5,
+            "construction_seconds": 60,
+            "ingredients": [],
+            "dimensions": {"width": 3, "height": 2},
+            "function": "Crafting tools and buildings"
+          },
+          "water_well": {
+            "name": "Water Well",
+            "unlocks_at_level": 2,
+            "coins_cost": 100,
+            "construction_seconds": 300,
+            "ingredients": [
+              {"item": "Wood", "amount": 5}
+            ],
+            "dimensions": {"width": 2, "height": 2},
+            "function": "Supports more crops"
+          }
+        },
+        "cooking_buildings": {
+          "kitchen": {
+            "name": "Kitchen",
+            "unlocks_at_level": 5,
+            "coins_cost": 10,
+            "construction_seconds": 1800,
+            "ingredients": [
+              {"item": "Wood", "amount": 30},
+              {"item": "Stone", "amount": 5}
+            ],
+            "dimensions": {"width": 4, "height": 3},
+            "function": "Advanced cooking"
+          },
+          "bakery": {
+            "name": "Bakery",
+            "unlocks_at_level": 8,
+            "coins_cost": 200,
+            "construction_seconds": 14400,
+            "ingredients": [
+              {"item": "Wood", "amount": 50},
+              {"item": "Stone", "amount": 20},
+              {"item": "Gold", "amount": 5}
+            ],
+            "dimensions": {"width": 4, "height": 3},
+            "function": "Baking recipes"
+          },
+          "deli": {
+            "name": "Deli",
+            "unlocks_at_level": 16,
+            "coins_cost": 300,
+            "construction_seconds": 43200,
+            "ingredients": [
+              {"item": "Wood", "amount": 50},
+              {"item": "Stone", "amount": 50},
+              {"item": "Gold", "amount": 10}
+            ],
+            "dimensions": {"width": 4, "height": 3},
+            "function": "Deli recipes"
+          },
+          "smoothie_shack": {
+            "name": "Smoothie Shack",
+            "unlocks_at_level": 23,
+            "coins_cost": 0,
+            "construction_seconds": 43200,
+            "ingredients": [
+              {"item": "Wood", "amount": 25},
+              {"item": "Stone", "amount": 25},
+              {"item": "Iron", "amount": 10}
+            ],
+            "dimensions": {"width": 3, "height": 2},
+            "function": "Smoothie recipes"
+          }
+        },
+        "animal_buildings": {
+          "hen_house": {
+            "name": "Hen House",
+            "unlocks_at_level": 6,
+            "coins_cost": 100,
+            "construction_seconds": 7200,
+            "ingredients": [
+              {"item": "Wood", "amount": 30},
+              {"item": "Iron", "amount": 5},
+              {"item": "Gold", "amount": 5}
+            ],
+            "dimensions": {"width": 4, "height": 3},
+            "function": "Houses chickens (up to 10, 15 with Chicken Coop collectible)",
+            "capacity": {"default": 10, "with_coop": 15}
+          },
+          "barn": {
+            "name": "Barn",
+            "unlocks_at_level": 30,
+            "coins_cost": 200,
+            "construction_seconds": 7200,
+            "ingredients": [
+              {"item": "Wood", "amount": 150},
+              {"item": "Iron", "amount": 10},
+              {"item": "Gold", "amount": 10}
+            ],
+            "dimensions": {"width": 4, "height": 4},
+            "function": "Houses larger animals"
+          }
+        },
+        "utility_buildings": {
+          "warehouse": {
+            "name": "Warehouse",
+            "unlocks_at_level": 20,
+            "coins_cost": 0,
+            "construction_seconds": 7200,
+            "ingredients": [
+              {"item": "Wood", "amount": 250},
+              {"item": "Stone", "amount": 150},
+              {"item": "Potato", "amount": 5000},
+              {"item": "Pumpkin", "amount": 2000},
+              {"item": "Wheat", "amount": 500},
+              {"item": "Kale", "amount": 100}
+            ],
+            "dimensions": {"width": 3, "height": 2},
+            "function": "Storage expansion"
+          },
+          "toolshed": {
+            "name": "Toolshed",
+            "unlocks_at_level": 25,
+            "coins_cost": 0,
+            "construction_seconds": 7200,
+            "ingredients": [
+              {"item": "Wood", "amount": 500},
+              {"item": "Iron", "amount": 30},
+              {"item": "Gold", "amount": 25},
+              {"item": "Axe", "amount": 100},
+              {"item": "Pickaxe", "amount": 50}
+            ],
+            "dimensions": {"width": 2, "height": 3},
+            "function": "Tool storage and upgrades"
+          }
+        },
+        "composting": {
+          "compost_bin": {
+            "name": "Compost Bin",
+            "unlocks_at_level": 7,
+            "coins_cost": 0,
+            "construction_seconds": 3600,
+            "ingredients": [
+              {"item": "Wood", "amount": 5},
+              {"item": "Stone", "amount": 5}
+            ],
+            "dimensions": {"width": 2, "height": 2},
+            "function": "Basic composting"
+          },
+          "turbo_composter": {
+            "name": "Turbo Composter",
+            "unlocks_at_level": 12,
+            "coins_cost": 0,
+            "construction_seconds": 7200,
+            "ingredients": [
+              {"item": "Wood", "amount": 50},
+              {"item": "Stone", "amount": 25}
+            ],
+            "dimensions": {"width": 2, "height": 2},
+            "function": "Faster composting"
+          },
+          "premium_composter": {
+            "name": "Premium Composter",
+            "unlocks_at_level": 18,
+            "coins_cost": 0,
+            "construction_seconds": 14400,
+            "ingredients": [
+              {"item": "Gold", "amount": 50}
+            ],
+            "dimensions": {"width": 2, "height": 2},
+            "function": "Premium composting"
+          }
+        }
+      },
+      "tools": {
+        "basic_tools": {
+          "axe": {
+            "name": "Axe",
+            "workbench_price": 20,
+            "shop_price": 320,
+            "ingredients": {},
+            "function": "Chop trees",
+            "durability": "unlimited"
+          },
+          "pickaxe": {
+            "name": "Pickaxe",
+            "workbench_price": 20,
+            "shop_price": 320,
+            "ingredients": {"Wood": 3},
+            "function": "Mine stone",
+            "durability": "unlimited"
+          },
+          "rod": {
+            "name": "Rod",
+            "workbench_price": 20,
+            "shop_price": 1600,
+            "ingredients": {"Wood": 3, "Stone": 1},
+            "function": "Fishing",
+            "durability": "unlimited"
+          }
+        },
+        "upgraded_tools": {
+          "stone_pickaxe": {
+            "name": "Stone Pickaxe",
+            "workbench_price": 20,
+            "shop_price": 640,
+            "ingredients": {"Wood": 3, "Stone": 5},
+            "function": "Mine stone faster",
+            "durability": "unlimited"
+          },
+          "iron_pickaxe": {
+            "name": "Iron Pickaxe",
+            "workbench_price": 80,
+            "shop_price": 1600,
+            "ingredients": {"Wood": 3, "Iron": 5},
+            "function": "Mine iron and stone",
+            "durability": "unlimited"
+          },
+          "gold_pickaxe": {
+            "name": "Gold Pickaxe",
+            "workbench_price": 100,
+            "shop_price": 2240,
+            "ingredients": {"Wood": 3, "Gold": 3},
+            "function": "Mine gold, iron and stone",
+            "durability": "unlimited"
+          }
+        },
+        "special_tools": {
+          "oil_drill": {
+            "name": "Oil Drill",
+            "workbench_price": 100,
+            "shop_price": 2240,
+            "ingredients": {"Wood": 20, "Iron": 9, "Leather": 10},
+            "function": "Extract oil",
+            "required_island": "desert",
+            "durability": "unlimited"
+          },
+          "sand_shovel": {
+            "name": "Sand Shovel",
+            "workbench_price": 20,
+            "ingredients": {"Wood": 2, "Stone": 1},
+            "function": "Dig for treasure",
+            "durability": "unlimited"
+          },
+          "sand_drill": {
+            "name": "Sand Drill",
+            "workbench_price": 40,
+            "ingredients": {"Oil": 1, "Crimstone": 1, "Wood": 3, "Leather": 1},
+            "function": "Dig for better treasure",
+            "durability": "unlimited"
+          }
+        }
+      },
+      "cooking_recipes": {
+        "fire_pit_recipes": {
+          "mashed_potato": {
+            "name": "Mashed Potato",
+            "building": "Fire Pit",
+            "experience": 3,
+            "cooking_seconds": 30,
+            "ingredients": {"Potato": 8}
+          },
+          "pumpkin_soup": {
+            "name": "Pumpkin Soup",
+            "building": "Fire Pit",
+            "experience": 24,
+            "cooking_seconds": 180,
+            "ingredients": {"Pumpkin": 10}
+          },
+          "reindeer_carrot": {
+            "name": "Reindeer Carrot",
+            "building": "Fire Pit",
+            "experience": 36,
+            "cooking_seconds": 300,
+            "ingredients": {"Carrot": 5}
+          },
+          "mushroom_soup": {
+            "name": "Mushroom Soup",
+            "building": "Fire Pit",
+            "experience": 56,
+            "cooking_seconds": 600,
+            "ingredients": {"Wild Mushroom": 5}
+          },
+          "boiled_eggs": {
+            "name": "Boiled Eggs",
+            "building": "Fire Pit",
+            "experience": 90,
+            "cooking_seconds": 3600,
+            "ingredients": {"Egg": 10}
+          },
+          "bumpkin_broth": {
+            "name": "Bumpkin Broth",
+            "building": "Fire Pit",
+            "experience": 96,
+            "cooking_seconds": 1200,
+            "ingredients": {"Carrot": 10, "Cabbage": 5}
+          },
+          "popcorn": {
+            "name": "Popcorn",
+            "building": "Fire Pit",
+            "experience": 200,
+            "cooking_seconds": 720,
+            "ingredients": {"Sunflower": 100, "Corn": 5}
+          },
+          "kale_stew": {
+            "name": "Kale Stew",
+            "building": "Fire Pit",
+            "experience": 400,
+            "cooking_seconds": 7200,
+            "ingredients": {"Kale": 10}
+          }
+        },
+        "kitchen_recipes": {
+          "sunflower_crunch": {
+            "name": "Sunflower Crunch",
+            "building": "Kitchen",
+            "experience": 50,
+            "cooking_seconds": 600,
+            "ingredients": {"Sunflower": 300}
+          },
+          "mushroom_jacket_potatoes": {
+            "name": "Mushroom Jacket Potatoes",
+            "building": "Kitchen",
+            "experience": 240,
+            "cooking_seconds": 600,
+            "ingredients": {"Wild Mushroom": 10, "Potato": 5}
+          },
+          "fruit_salad": {
+            "name": "Fruit Salad",
+            "building": "Kitchen",
+            "experience": 225,
+            "cooking_seconds": 1800,
+            "ingredients": {"Apple": 1, "Orange": 1, "Blueberry": 1}
+          },
+          "pancakes": {
+            "name": "Pancakes",
+            "building": "Kitchen",
+            "experience": 1000,
+            "cooking_seconds": 3600,
+            "ingredients": {"Wheat": 10, "Egg": 10, "Honey": 6}
+          }
+        }
+      },
+      "game_mechanics": {
+        "leveling": {
+          "experience_sources": [
+            "Cooking food",
+            "Eating food", 
+            "Completing deliveries",
+            "Harvesting crops"
+          ],
+          "level_requirements": "Progressive XP requirements"
+        },
+        "energy_system": {
+          "energy_sources": "Food consumption",
+          "energy_uses": "Various activities"
+        },
+        "land_expansion": {
+          "basic_land_expansions": "Progressive unlock",
+          "requirements": "Coins and resources"
+        },
+        "seasons": {
+          "spring": {
+            "available_seeds": ["Sunflower Seed", "Rhubarb Seed", "Carrot Seed", "Cabbage Seed", "Soybean Seed", "Corn Seed", "Wheat Seed", "Kale Seed"]
+          },
+          "summer": {
+            "available_seeds": ["Sunflower Seed", "Potato Seed", "Zucchini Seed", "Pepper Seed", "Beetroot Seed", "Cauliflower Seed", "Eggplant Seed", "Radish Seed", "Wheat Seed"]
+          },
+          "autumn": {
+            "available_seeds": ["Potato Seed", "Pumpkin Seed", "Carrot Seed", "Yam Seed", "Broccoli Seed", "Soybean Seed", "Wheat Seed", "Barley Seed"]
+          },
+          "winter": {
+            "available_seeds": ["Potato Seed", "Cabbage Seed", "Beetroot Seed", "Cauliflower Seed", "Parsnip Seed", "Onion Seed", "Turnip Seed", "Wheat Seed", "Kale Seed"]
+          }
+        }
+      },
+      "resources": {
+        "basic_resources": {
+          "wood": {
+            "name": "Wood",
+            "source": "Trees",
+            "tool_required": "Axe",
+            "regeneration_time": "varies by tree type",
+            "uses": ["Building construction", "Tool crafting", "Various recipes"]
+          },
+          "stone": {
+            "name": "Stone",
+            "source": "Stone deposits",
+            "tool_required": "Pickaxe",
+            "regeneration_time": "varies by deposit",
+            "uses": ["Building construction", "Tool crafting", "Various recipes"]
+          },
+          "iron": {
+            "name": "Iron",
+            "source": "Iron deposits",
+            "tool_required": "Iron Pickaxe or better",
+            "regeneration_time": "varies by deposit",
+            "uses": ["Advanced building construction", "Tool upgrades"]
+          },
+          "gold": {
+            "name": "Gold",
+            "source": "Gold deposits",
+            "tool_required": "Gold Pickaxe",
+            "regeneration_time": "varies by deposit", 
+            "uses": ["Premium building construction", "Advanced crafting"]
+          }
+        },
+        "special_resources": {
+          "crimstone": {
+            "name": "Crimstone",
+            "source": "Desert island deposits",
+            "required_island": "desert",
+            "uses": ["Desert building construction", "Advanced crafting"]
+          },
+          "oil": {
+            "name": "Oil",
+            "source": "Oil reservoirs",
+            "tool_required": "Oil Drill",
+            "required_island": "desert",
+            "uses": ["Crop machine operation", "Various recipes"]
+          }
+        }
+      }
+    },
+    "constants": {
+      "time_multipliers": {
+        "minute": 60,
+        "hour": 3600,
+        "day": 86400
+      },
+      "building_limits": {
+        "based_on_bumpkin_level": true,
+        "hen_house_chicken_capacity": {
+          "default": 10,
+          "with_chicken_coop": 15
+        }
+      },
+      "crop_categories": {
+        "basic": "Harvest time <= 30 minutes",
+        "medium": "Harvest time between 30 minutes and 16 hours", 
+        "advanced": "Harvest time >= 16 hours",
+        "overnight": "Harvest time >= 24 hours"
+      }
+    },
+    "extraction_notes": {
+      "data_source": "Client-side JavaScript code from Sunflower Land game",
+      "extraction_date": "2024",
+      "completeness": "Core game mechanics extracted, some specialized systems may need additional extraction",
+      "accuracy": "Based on game code constants and data structures"
+    }
+  }
+}

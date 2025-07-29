@@ -5,51 +5,22 @@ import {
 class NetworkInterceptor {
 
   constructor() {
-    console.log('🚀🚀🚀 NetworkInterceptor constructor appelé 🚀🚀🚀');
-    console.log('📍 URL actuelle:', window.location.href);
-    console.log('📍 Domain:', window.location.hostname);
     this.interceptFetch();
     this.interceptXMLHttpRequest();
-    console.log('✅✅✅ NetworkInterceptor initialisé avec succès ✅✅✅');
-    
-    // Test de base pour vérifier que le script fonctionne
-    console.log('🔍 Test de fetch original:', typeof window.fetch);
-    console.log('🔍 Test de chrome.runtime:', typeof chrome?.runtime);
   }
 
   private interceptFetch(): void {
-    console.log('🔧 Début de interceptFetch()');
     const originalFetch = window.fetch;
     
     window.fetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
       const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
       
-      // Log TOUTES les requêtes pour debug
-      if (url.includes('sunflower-land.com')) {
-        console.log('🌻 Requête Sunflower détectée:', {
-          url,
-          method: init?.method || 'GET',
-          isAPI: url.includes('api.sunflower-land.com')
-        });
-      }
       
       // Capturer POST /session ET POST /autosave
       const isSessionPost = url.includes('api.sunflower-land.com/session') && (init?.method === 'POST');
       const isAutosavePost = url.includes('api.sunflower-land.com/autosave') && (init?.method === 'POST');
       const shouldCapture = isSessionPost || isAutosavePost;
       
-      if (shouldCapture) {
-        if (isSessionPost) {
-          console.log('🟢 POST /session DÉTECTÉ:', url);
-        } else if (isAutosavePost) {
-          console.log('🔄 POST /autosave DÉTECTÉ:', url);
-          // Extraire l'analyticsId pour les logs
-          const match = url.match(/\/autosave\/(\d+)/);
-          if (match) {
-            console.log('🎯 analyticsId extrait:', match[1]);
-          }
-        }
-      }
 
       const startTime = Date.now();
       let requestBody: any = undefined;
@@ -193,18 +164,6 @@ class NetworkInterceptor {
             const isAutosavePost = url.includes('api.sunflower-land.com/autosave') && method === 'POST';
             const shouldCapture = isSessionPost || isAutosavePost;
             
-            if (shouldCapture) {
-              if (isSessionPost) {
-                console.log('🟢 POST /session DÉTECTÉ (XHR):', url);
-              } else if (isAutosavePost) {
-                console.log('🔄 POST /autosave DÉTECTÉ (XHR):', url);
-                // Extraire l'analyticsId pour les logs
-                const match = url.match(/\/autosave\/(\d+)/);
-                if (match) {
-                  console.log('🎯 analyticsId extrait (XHR):', match[1]);
-                }
-              }
-            }
             
             let responseBody: any = undefined;
             
@@ -286,29 +245,14 @@ class NetworkInterceptor {
       data: data
     }, '*');
     
-    const logPrefix = data.type === 'autosave' ? '🔄' : '🟢';
-    console.log(`${logPrefix} Données envoyées via postMessage:`, {
-      type: data.type,
-      method: data.method,
-      url: data.url,
-      analyticsId: data.analyticsId,
-      hasResponseBody: !!data.responseBody
-    });
   }
 }
 
-// Log de démarrage du script
-console.log('🚀 Script network-interceptor.js chargé!', window.location.href);
-console.log('🚀 Document ready state:', document.readyState);
-
 // Initialiser l'intercepteur réseau dès que possible
 if (document.readyState === 'loading') {
-  console.log('🚀 En attente de DOMContentLoaded...');
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Initialisation intercepteur réseau (DOMContentLoaded)');
     new NetworkInterceptor();
   });
 } else {
-  console.log('🚀 Initialisation intercepteur réseau (immédiate)');
   new NetworkInterceptor();
 }

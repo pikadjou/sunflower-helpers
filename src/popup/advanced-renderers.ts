@@ -11,34 +11,19 @@ export class TimersRenderer {
   static render(gameData: SunflowerGameData | null): void {
     // Nettoyer les intervals existants
     this.cleanup();
-    console.log('⏰ TimersRenderer.render appelé avec:', {
-      hasData: !!gameData,
-      dataKeys: gameData ? Object.keys(gameData) : [],
-      crops: gameData?.crops ? Object.keys(gameData.crops).length : 0,
-      beehives: gameData?.beehives ? Object.keys(gameData.beehives).length : 0,
-      buildings: gameData?.buildings ? Object.keys(gameData.buildings).length : 0
-    });
     
     if (!gameData) {
-      console.log('❌ Pas de données de jeu, affichage du message par défaut');
       this.renderNoData();
       return;
     }
 
     try {
       const timerData = TimerManager.calculateTimers(gameData);
-      console.log('✅ Données de timer calculées:', {
-        activeTimers: timerData.activeTimers.length,
-        scheduledActivities: timerData.scheduledActivities.length,
-        harvestCalendar: timerData.harvestCalendar.length,
-        optimizationSuggestions: timerData.optimizationSuggestions.length
-      });
 
       this.renderActiveTimers(timerData);
       // Supprimer les autres sections - garder seulement "Activités en Cours"
       this.hideOtherSections();
     } catch (error) {
-      console.error('❌ Erreur lors du calcul des timers:', error);
       this.renderNoData();
     }
   }

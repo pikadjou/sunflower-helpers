@@ -121,8 +121,13 @@
 
       <!-- Timers -->
       <div id="timers" class="tab-pane">
+        <div class="timer-controls">
+          <button id="extractTimers" class="action-btn">🔍 Extraire Timers (Une fois)</button>
+          <span id="lastExtractionTime" class="last-extraction">Dernière extraction: jamais</span>
+        </div>
+        
         <div class="timers-overview">
-          <h3>⏰ Activités en Cours</h3>
+          <h3>⏰ Timers Extraits avec Dates de Fin</h3>
           <div class="active-timers">
             <div id="activeTimers" class="timers-grid">
               <!-- Active timers will be populated here -->

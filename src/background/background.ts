@@ -17,11 +17,9 @@ class BackgroundManager {
       this.handleMessage(request, sender, sendResponse)
     );
     
-    console.log('Sunflower API Monitor démarré');
   }
 
   private handleInstall(): void {
-    console.log('Sunflower API Monitor installé');
     // Initialiser le stockage vide pour les données de session
     chrome.storage.local.set({ sessionData: [] });
   }
@@ -31,7 +29,6 @@ class BackgroundManager {
     _sender: chrome.runtime.MessageSender, 
     sendResponse: (response?: any) => void
   ): boolean {
-    console.log('Message reçu:', request);
     
     switch (request.action) {
       case ExtensionAction.GET_SESSION_DATA:
@@ -50,7 +47,6 @@ class BackgroundManager {
         return true;
         
       default:
-        console.log('Action non reconnue:', request.action);
     }
 
     return false;
@@ -59,7 +55,6 @@ class BackgroundManager {
 
   // Méthodes pour recevoir les données des content scripts
   private handleNetworkDataFromContent(data: SunflowerSessionData): void {
-    console.log('Données réseau reçues du content script:', data.url, 'Type:', data.type);
     
     if (data.type === 'autosave') {
       this.handleAutosaveData(data);
@@ -69,7 +64,6 @@ class BackgroundManager {
   }
 
   private handleAutosaveData(data: SunflowerSessionData): void {
-    console.log('Traitement données autosave, analyticsId:', data.analyticsId);
     
     // Stocker aussi les données d'autosave dans l'historique
     this.storeSunflowerSessionData(data);
@@ -84,7 +78,6 @@ class BackgroundManager {
   }
 
   private async broadcastRealTimeUpdate(farmData: SunflowerGameData, analyticsId?: string): Promise<void> {
-    console.log('Diffusion mise à jour temps réel:', analyticsId);
     
     // Stocker les dernières données d'autosave pour les popups qui s'ouvrent plus tard
     await chrome.storage.local.set({ 
@@ -100,9 +93,7 @@ class BackgroundManager {
         data: farmData,
         analyticsId: analyticsId || 'unknown'
       } as AutosaveUpdateMessage);
-      console.log('✅ Message autosave envoyé au popup');
     } catch (error) {
-      console.log('😴 Popup non disponible, données stockées pour plus tard');
     }
   }
 
@@ -121,7 +112,6 @@ class BackgroundManager {
       
       await chrome.storage.local.set({ sessionData: storedData });
       
-      console.log('Données de session stockées:', sessionData.url, sessionData.method, 'Type:', sessionData.type);
       
       // Notifier les autres composants (seulement pour les sessions, pas les autosaves)
       if (sessionData.type === 'session') {
@@ -129,7 +119,6 @@ class BackgroundManager {
       }
       
     } catch (error) {
-      console.error('Erreur lors du stockage des données de session:', error);
     }
   }
 
@@ -138,7 +127,6 @@ class BackgroundManager {
       const result = await chrome.storage.local.get(['sessionData']);
       return result['sessionData'] || [];
     } catch (error) {
-      console.error('Erreur lors de la récupération des données de session:', error);
       return [];
     }
   }
@@ -152,7 +140,6 @@ class BackgroundManager {
         analyticsId: result['lastAutosaveAnalyticsId'] || null
       };
     } catch (error) {
-      console.error('Erreur lors de la récupération des données d\'autosave:', error);
       return { data: null, timestamp: 0, analyticsId: null };
     }
   }

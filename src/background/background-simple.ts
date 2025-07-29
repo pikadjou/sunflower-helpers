@@ -1,14 +1,12 @@
 // Background script minimal pour tests
-console.log('Background script chargé');
 
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('Extension installée');
   chrome.storage.local.set({ sessionData: [] });
 });
 
 chrome.runtime.onMessage.addListener((request: any, _sender: any, sendResponse: any) => {
-  console.log('Message reçu:', request);
   
+  // Gestion des données réseau (existant)
   if (request.action === 'networkRequest') {
     chrome.storage.local.get(['sessionData'], (result: any) => {
       const sessionData = result['sessionData'] || [];
@@ -26,11 +24,43 @@ chrome.runtime.onMessage.addListener((request: any, _sender: any, sendResponse: 
     return true; // Pour réponse asynchrone
   }
   
+  // Gestion des données de timers (nouveau - version simplifiée)
+  if (request.action === 'timersExtracted') {
+
+    // Stocker les dernières données de timers
+    chrome.storage.local.get(['timerData'], (result: any) => {
+      const timerHistory = result['timerData'] || [];
+      timerHistory.push(request.data);
+      
+      // Garder seulement les 100 dernières extractions
+      if (timerHistory.length > 100) {
+        timerHistory.splice(0, timerHistory.length - 100);
+      }
+      
+      chrome.storage.local.set({ 
+        timerData: timerHistory,
+        lastTimerExtraction: request.data 
+      }, () => {
+        sendResponse({ success: true });
+      });
+    });
+    return true;
+  }
+  
   if (request.action === 'getSessionData') {
     chrome.storage.local.get(['sessionData'], (result: any) => {
       const sessionData = result['sessionData'] || [];
-      console.log('Background: Retour de', sessionData.length, 'sessions');
       sendResponse(sessionData); // Retourner directement les données
+    });
+    return true;
+  }
+
+  // Récupérer les données de timers (nouveau)
+  if (request.action === 'getTimerData') {
+    chrome.storage.local.get(['timerData', 'lastTimerExtraction'], (result: any) => {
+      const timerData = result['timerData'] || [];
+      const lastExtraction = result['lastTimerExtraction'] || null;
+      sendResponse({ history: timerData, latest: lastExtraction });
     });
     return true;
   }

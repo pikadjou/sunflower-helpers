@@ -1,19 +1,11 @@
 import { SunflowerGameData } from '../types/extension';
 import { TimerManager } from './analytics-utils';
-import { TemplateEngine, TemplateData } from './template-engine';
-import { CropDataManager, CropGroup } from './crop-data-manager';
 
 /**
  * Optimized crop tabs renderer using HTML templates
  */
 export class CropTabsRenderer {
   private static currentInterval: number | null = null;
-  private static readonly TEMPLATES = {
-    container: 'crop-tabs-container',
-    tab: 'crop-tab', 
-    panel: 'crop-tab-panel',
-    item: 'crop-item'
-  } as const;
 
   /**
    * Main render method
@@ -38,126 +30,36 @@ export class CropTabsRenderer {
         return;
       }
 
-      await this.renderCropTabs(container, cropsOnly);
+      // Utiliser un rendu simple sans templates pour garantir l'affichage
+      this.renderSimpleTimers(container, cropsOnly);
       this.hideOtherSections();
       
     } catch (error) {
-      console.error('❌ Erreur lors du rendu des onglets:', error);
       await this.renderNoData(container);
     }
   }
 
-  /**
-   * Render crop tabs interface
-   */
-  private static async renderCropTabs(container: HTMLElement, crops: any[]): Promise<void> {
-    const cropGroups = CropDataManager.groupCropsByType(crops);
-    const tabsId = `crop-tabs-${Date.now()}`;
-    
-    // Load main container template
-    const containerTemplate = await TemplateEngine.loadTemplate(this.TEMPLATES.container);
-    container.innerHTML = containerTemplate;
-
-    // Get containers for tabs and panels
-    const tabsContainer = container.querySelector('[data-tabs-container]') as HTMLElement;
-    const contentContainer = container.querySelector('[data-content-container]') as HTMLElement;
-    
-    if (!tabsContainer || !contentContainer) {
-      throw new Error('Template containers not found');
-    }
-
-    // Render tabs and panels
-    await this.renderTabs(tabsContainer, cropGroups, tabsId);
-    await this.renderPanels(contentContainer, cropGroups, tabsId);
-    
-    // Attach event listeners
-    this.attachEventListeners(container);
-  }
 
   /**
-   * Render tab buttons
+   * Render simple timers without templates (fallback)
    */
-  private static async renderTabs(container: HTMLElement, cropGroups: Map<string, CropGroup>, tabsId: string): Promise<void> {
-    const tabsData = CropDataManager.createTabData(cropGroups, tabsId);
-    const tabTemplate = await TemplateEngine.loadTemplate(this.TEMPLATES.tab);
+  private static renderSimpleTimers(container: HTMLElement, timers: any[]): void {
+    const html = `
+      <div class="simple-timers">
+        <h3>Cultures en cours (${timers.length})</h3>
+        <div class="timer-list">
+          ${timers.map(timer => `
+            <div class="timer-item ${timer.isReady ? 'ready' : 'growing'}">
+              <div class="timer-name">${timer.name}</div>
+              <div class="timer-time">${timer.remainingTimeFormatted}</div>
+              <div class="timer-status">${timer.isReady ? '✅ PRÊT' : '🌱 En cours'}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
     
-    const tabsHTML = tabsData.map(tabData => 
-      TemplateEngine.render(tabTemplate, tabData as TemplateData)
-    ).join('');
-    
-    container.innerHTML = tabsHTML;
-  }
-
-  /**
-   * Render tab panels
-   */
-  private static async renderPanels(container: HTMLElement, cropGroups: Map<string, CropGroup>, tabsId: string): Promise<void> {
-    const panelsData = CropDataManager.createPanelData(cropGroups, tabsId);
-    const panelTemplate = await TemplateEngine.loadTemplate(this.TEMPLATES.panel);
-    const itemTemplate = await TemplateEngine.loadTemplate(this.TEMPLATES.item);
-    
-    const panelsHTML = await Promise.all(
-      panelsData.map(async (panelData) => {
-        // Render panel structure
-        let panelHTML = TemplateEngine.render(panelTemplate, panelData as TemplateData);
-        
-        // Render items for this panel
-        const itemsHTML = panelData.items.map(item => 
-          TemplateEngine.render(itemTemplate, item as TemplateData)
-        ).join('');
-        
-        // Inject items into panel
-        panelHTML = panelHTML.replace('<!-- Items injectés dynamiquement -->', itemsHTML);
-        
-        return panelHTML;
-      })
-    );
-    
-    container.innerHTML = panelsHTML.join('');
-  }
-
-  /**
-   * Attach event listeners for tab switching
-   */
-  private static attachEventListeners(container: HTMLElement): void {
-    const tabButtons = container.querySelectorAll('.crop-tab');
-    
-    tabButtons.forEach(button => {
-      button.addEventListener('click', (event) => {
-        const target = event.currentTarget as HTMLElement;
-        const tabTarget = target.getAttribute('data-tab-target');
-        
-        if (!tabTarget) return;
-        
-        this.switchTab(target, tabTarget);
-      });
-    });
-  }
-
-  /**
-   * Switch active tab
-   */
-  private static switchTab(clickedButton: HTMLElement, tabId: string): void {
-    const tabsContainer = clickedButton.closest('.crop-tabs-container');
-    
-    if (!tabsContainer) return;
-    
-    // Remove active class from all tabs and panels
-    tabsContainer.querySelectorAll('.crop-tab').forEach(tab => 
-      tab.classList.remove('active')
-    );
-    tabsContainer.querySelectorAll('.crop-tab-panel').forEach(panel => 
-      panel.classList.remove('active')
-    );
-    
-    // Add active class to clicked tab
-    clickedButton.classList.add('active');
-    
-    // Add active class to corresponding panel
-    const panel = document.getElementById(tabId);
-    if (panel) {
-      panel.classList.add('active');
-    }
+    container.innerHTML = html;
   }
 
   /**

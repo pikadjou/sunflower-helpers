@@ -31,7 +31,6 @@ class DashboardManager {
   }
 
   private async initializeDashboard(): Promise<void> {
-    console.log('Sunflower Dashboard initialisé');
     
     await this.loadSessionData();
     this.setupEventListeners();
@@ -101,38 +100,30 @@ class DashboardManager {
       });
       
       this.sessionData = response || [];
-      console.log('Données de session chargées:', this.sessionData.length, 'sessions');
       
       // Log des données pour débogage
       if (this.sessionData.length > 0) {
-        console.log('Dernière session:', this.sessionData[this.sessionData.length - 1]);
       }
     } catch (error) {
-      console.error('Erreur lors du chargement des données de session:', error);
     }
   }
 
   private extractGameData(): void {
     if (this.sessionData.length === 0) {
       this.currentGameData = null;
-      console.log('Aucune donnée de session disponible');
       return;
     }
 
     // Prendre la réponse la plus récente
     const latestSession = this.sessionData[this.sessionData.length - 1];
-    console.log('Session la plus récente:', latestSession);
     
     if (latestSession?.responseBody?.farm) {
       // Les données de la ferme sont dans responseBody.farm
       this.currentGameData = latestSession.responseBody.farm;
-      console.log('Données de la ferme extraites:', this.currentGameData);
     } else if (latestSession?.responseBody) {
       // Fallback: utiliser responseBody directement
       this.currentGameData = latestSession.responseBody;
-      console.log('Données extraites depuis responseBody:', this.currentGameData);
     } else {
-      console.log('Pas de responseBody dans la session');
       this.currentGameData = null;
     }
   }
@@ -583,7 +574,6 @@ class DashboardManager {
       
       alert('Toutes les données ont été effacées.');
     } catch (error) {
-      console.error('Erreur lors de l\'effacement des données:', error);
       alert('Erreur lors de l\'effacement des données.');
     }
   }

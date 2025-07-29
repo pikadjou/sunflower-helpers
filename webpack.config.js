@@ -7,7 +7,8 @@ module.exports = {
     popup: './src/popup/popup.ts',
     background: './src/background/background-simple.ts',
     content: './src/content/content.ts',
-    'network-interceptor': './src/content/network-interceptor.ts'
+    'network-interceptor': './src/content/network-interceptor.ts',
+    'timer-manager': './src/content/timer-manager.ts'
   },
   module: {
     rules: [
