@@ -14,7 +14,9 @@
       "Bash(cp:*)",
       "Bash(npm run type-check:*)",
       "Bash(npm run clean:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(npm test)",
+      "Bash(npx jest:*)"
     ],
     "deny": []
   }
